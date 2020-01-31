@@ -3,7 +3,6 @@
 
 using osu.Framework.Input.Events;
 using osu.Framework.Input.Handlers.Microphone;
-using osu.Framework.Input.StateChanges;
 using osu.Framework.Input.StateChanges.Events;
 using osu.Framework.Input.States;
 
@@ -34,13 +33,21 @@ namespace osu.Framework.Input
 
         protected virtual void HandleMicrophoneStateChange(MicrophoneSoundChangeEvent microphoneSoundChange)
         {
-            // TODO : call microphoneStartSinging, microphoneEndSinging, microphoneSinging at right time
-            microphoneSinging(new MicrophoneInputState(microphoneSoundChange.LastState));
+            var inputState = microphoneSoundChange.State as MicrophoneInputState;
+            var lastState = microphoneSoundChange.LastState;
+            var state = inputState.Microphone;
+
+            if (!lastState.HasSound && state.HasSound)
+                microphoneStartSinging(inputState);
+            else if(lastState.HasSound && !state.HasSound)
+                microphoneEndSinging(inputState);
+            else
+                microphoneSinging(inputState);
         }
 
-        private bool microphoneStartSinging(MicrophoneInputState state) => PropagateBlockableEvent(PositionalInputQueue, new MicrophoneStartSingingEvent(state));
+        private bool microphoneStartSinging(MicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneStartSingingEvent(state));
 
-        private bool microphoneEndSinging(MicrophoneInputState state) => PropagateBlockableEvent(PositionalInputQueue, new MicrophoneEndSingingEvent(state));
+        private bool microphoneEndSinging(MicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneEndSingingEvent(state));
 
         private bool microphoneSinging(MicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneSingingEvent(state));
     }

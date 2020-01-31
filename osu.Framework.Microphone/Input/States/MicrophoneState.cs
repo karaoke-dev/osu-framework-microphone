@@ -10,17 +10,17 @@ namespace osu.Framework.Input.States
         /// <summary>
         /// Detected pitch
         /// </summary>
-        public double Pitch { get; set; } = -1;
+        public double Pitch { get; set; }
 
         /// <summary>
         /// Detected volumn
         /// </summary>
-        public float Volumn { get; set; } = -1;
+        public float Volumn { get; set; }
 
         /// <summary>
         /// Detected sound or not
         /// </summary>
-        public bool HasSound => Pitch != -1;
+        public bool HasSound => Pitch != 0;
 
         public MicrophoneState()
         { 

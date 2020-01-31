@@ -59,10 +59,14 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         void onPitchDetected(MicrophoneState state)
         {
+            // do not continuous sending no sound event
+            if (!state.HasSound && lastState.HasSound == state.HasSound)
+                return;
+
             // Throw into pending input
             PendingInputs.Enqueue(new MicrophoneInput
             {
-                State = lastState
+                State = state
             });
 
             lastState = state;

@@ -16,11 +16,8 @@ namespace osu.Framework.Input.StateChanges
             if (!(state is MicrophoneInputState microphoneInputState))
                 throw new ArgumentException($"{nameof(state)} should be the type of {nameof(MicrophoneInputState)}");
 
-            //if (state == microphoneInputState)
-            //    return;
-
             // Become last state
-            var lastState = microphoneInputState.Microphone;
+            var lastState = microphoneInputState.Microphone.Clone() as MicrophoneState;
 
             // Update latest state into input state
             microphoneInputState.Microphone.Pitch = State.Pitch;
