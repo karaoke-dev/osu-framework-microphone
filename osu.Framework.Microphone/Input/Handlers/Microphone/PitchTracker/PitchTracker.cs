@@ -54,6 +54,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// </summary>
         public float DetectLevelThreshold
         {
+            get => m_detectLevelThreshold;
             set
             {
                 var newValue = Math.Max(0.0001f, Math.Min(1.0f, value));

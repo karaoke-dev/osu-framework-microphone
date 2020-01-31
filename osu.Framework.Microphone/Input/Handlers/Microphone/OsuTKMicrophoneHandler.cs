@@ -25,6 +25,12 @@ namespace osu.Framework.Input.Handlers.Microphone
             deviceIndex = device;
         }
 
+        public float DetectLevelThreshold
+        {
+            get => pitchTracker.DetectLevelThreshold;
+            set => pitchTracker.DetectLevelThreshold = value;
+        }
+
         public override bool Initialize(GameHost host)
         {
             // Open microphone device if available
