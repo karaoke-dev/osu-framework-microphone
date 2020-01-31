@@ -5,11 +5,11 @@ using System;
 
 namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
 {
-    class CircularBuffer : IDisposable
+    internal class CircularBuffer : IDisposable
     {
-        readonly int m_bufSize;
-        int _mBegBufOffset, _mAvailBuf;
-        float[] _mBuffer;
+        private readonly int m_bufSize;
+        private int _mBegBufOffset, _mAvailBuf;
+        private float[] _mBuffer;
 
         public CircularBuffer(int BufferCount)
         {

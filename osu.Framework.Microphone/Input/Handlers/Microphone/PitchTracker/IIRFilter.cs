@@ -6,22 +6,22 @@ using System.Linq;
 
 namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
 {
-    enum IIRFilterType { LP, HP }
+    internal  enum IIRFilterType { LP, HP }
 
     /// <summary>
     /// Infinite impulse response filter (old style analog filters)
     /// </summary>
-    class IIRFilter
+    internal class IIRFilter
     {
-        const int kHistMask = 31, kHistSize = 32;
+        private const int kHistMask = 31, kHistSize = 32;
 
-        int m_order;
-        IIRFilterType m_filterType;
+        private int m_order;
+        private IIRFilterType m_filterType;
 
-        float m_fp1, m_fp2, m_fN, m_sampleRate;
-        double[] m_real, m_imag, m_z, m_aCoeff, m_bCoeff, m_inHistory, m_outHistory;
-        int m_histIdx;
-        bool m_invertDenormal;
+        private float m_fp1, m_fp2, m_fN, m_sampleRate;
+        private double[] m_real, m_imag, m_z, m_aCoeff, m_bCoeff, m_inHistory, m_outHistory;
+        private int m_histIdx;
+        private bool m_invertDenormal;
 
         public IIRFilter(IIRFilterType Type, int Order, float SampleRate)
         {
@@ -82,15 +82,15 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
             }
         }
 
-        static bool IsOdd(int n) => (n & 1) == 1;
+        private static bool IsOdd(int n) => (n & 1) == 1;
 
-        static double Sqr(double value) => value * value;
+        private static double Sqr(double value) => value * value;
 
         /// <summary>
         /// Determines poles and zeros of IIR filter
         /// based on bilinear transform method
         /// </summary>
-        void LocatePolesAndZeros()
+        private void LocatePolesAndZeros()
         {
             m_real = new double[m_order + 1];
             m_imag = new double[m_order + 1];

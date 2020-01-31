@@ -9,33 +9,36 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
     /// <summary>
     /// Tracks pitch
     /// </summary>
-    public class PitchTracker
+    internal class PitchTracker
     {
         #region Fields
-        const int kOctaveSteps = 96;
+
         public const float MinimumDetectedFrequency = 50;               // A1, Midi note 33, 55.0Hz
         public const float MaximumDetectedFrequency = 1600;             // A#6. Midi note 92
-        const float kDetectOverlapSec = 0.005f;
-        const float kMaxOctaveSecRate = 10.0f;
 
-        const float kAvgOffset = 0.005f;	        // time offset between pitch averaging values
-        const int kAvgCount = 1;			        // number of average pitch samples to take
-        const float kCircularBufSaveTime = 1.0f;    // Amount of samples to store in the history Buffer
+        private const int kOctaveSteps = 96;
+        private const float kDetectOverlapSec = 0.005f;
+        private const float kMaxOctaveSecRate = 10.0f;
 
-        PitchProcessor m_dsp;
-        CircularBuffer m_circularBufferLo;
-        CircularBuffer m_circularBufferHi;
-        double m_sampleRate;
-        float m_detectLevelThreshold = 0.001f;       // -50dB
-        int m_pitchRecordsPerSecond = 50;           // default is 50, or one record every 20ms
+        private const float kAvgOffset = 0.005f;	        // time offset between pitch averaging values
+        private const int kAvgCount = 1;			        // number of average pitch samples to take
+        private const float kCircularBufSaveTime = 1.0f;    // Amount of samples to store in the history Buffer
 
-        float[] m_pitchBufLo, m_pitchBufHi;
-        int m_pitchBufSize;
+        private PitchProcessor m_dsp;
+        private CircularBuffer m_circularBufferLo;
+        private CircularBuffer m_circularBufferHi;
+        private double m_sampleRate;
+        private float m_detectLevelThreshold = 0.001f;       // -50dB
+        private int m_pitchRecordsPerSecond = 50;           // default is 50, or one record every 20ms
 
-        int m_detectOverlapSamples;
-        float m_maxOverlapDiff;
+        private float[] m_pitchBufLo, m_pitchBufHi;
+        private int m_pitchBufSize;
 
-        IIRFilter m_iirFilterLoLo, m_iirFilterLoHi, m_iirFilterHiLo, m_iirFilterHiHi;
+        private int m_detectOverlapSamples;
+        private float m_maxOverlapDiff;
+
+        private IIRFilter m_iirFilterLoLo, m_iirFilterLoHi, m_iirFilterHiLo, m_iirFilterHiHi;
+
         #endregion
 
         public PitchTracker(double SampleRate = 44100)
@@ -45,6 +48,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         }
 
         #region Properties
+
         /// <summary>
         /// Set the detect level threshold, The value must be between 0.0001f and 1.0f (-80 dB to 0 dB)
         /// </summary>
@@ -95,9 +99,11 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// This is just an estimate to sync up the samples and detected pitch
         /// </summary>
         public int DetectSampleOffset => (m_pitchBufSize + m_detectOverlapSamples) / 2;
+
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Reset the pitch tracker. Call this when the sample position is
         /// not consecutive from the previous position
@@ -196,7 +202,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// Copy the values from one Buffer to a different or the same Buffer. 
         /// It is safe to copy to the same Buffer, even if the areas overlap
         /// </summary>
-        static void SafeCopy<T>(T[] from, T[] to, int fromStart, int toStart, int length)
+        private static void SafeCopy<T>(T[] from, T[] to, int fromStart, int toStart, int length)
         {
             if (to == null || from.Length == 0 || to.Length == 0)
                 return;
@@ -245,7 +251,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// <summary>
         /// Setup
         /// </summary>
-        void Setup()
+        private void Setup()
         {
             if (m_sampleRate < 1)
                 return;
@@ -271,6 +277,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
             m_circularBufferLo = new CircularBuffer((int)(kCircularBufSaveTime * m_sampleRate + 0.5f) + 10000);
             m_circularBufferHi = new CircularBuffer((int)(kCircularBufSaveTime * m_sampleRate + 0.5f) + 10000);
         }
+
         #endregion
 
         public event Action<MicrophoneState> PitchDetected;

@@ -5,23 +5,23 @@ using System;
 
 namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
 {
-    class PitchProcessor
+    internal class PitchProcessor
     {
-        const int kCourseOctaveSteps = 96;
-        const int kScanHiSize = 31;
-        const float kScanHiFreqStep = 1.005f;
+        private const int kCourseOctaveSteps = 96;
+        private const int kScanHiSize = 31;
+        private const float kScanHiFreqStep = 1.005f;
 
-        readonly int m_blockLen44;	   // 4/4 block len
+        private readonly int m_blockLen44;	   // 4/4 block len
 
-        readonly float m_detectLevelThreshold;
+        private readonly float m_detectLevelThreshold;
 
-        readonly int m_numCourseSteps;
-        readonly float[] m_pCourseFreqOffset;
-        readonly float[] m_pCourseFreq;
-        readonly float[] m_scanHiOffset = new float[kScanHiSize];
-        readonly float[] m_peakBuf = new float[kScanHiSize];
-        int m_prevPitchIdx;
-        readonly float[] m_detectCurve;
+        private readonly int m_numCourseSteps;
+        private readonly float[] m_pCourseFreqOffset;
+        private readonly float[] m_pCourseFreq;
+        private readonly float[] m_scanHiOffset = new float[kScanHiSize];
+        private readonly float[] m_peakBuf = new float[kScanHiSize];
+        private int m_prevPitchIdx;
+        private readonly float[] m_detectCurve;
 
         public PitchProcessor(double SampleRate, float MinPitch, float MaxPitch, float DetectLevelThreshold)
         {
@@ -67,7 +67,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// <summary>
         /// Low resolution pitch detection
         /// </summary>
-        float DetectPitchLo(float[] samplesLo, float[] samplesHi)
+        private float DetectPitchLo(float[] samplesLo, float[] samplesHi)
         {
             Array.Clear(m_detectCurve, 0, m_detectCurve.Length);
 
@@ -165,7 +165,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// <summary>
         /// High resolution pitch detection
         /// </summary>
-        float DetectPitchHi(float[] samples, int lowFreqIdx)
+        private float DetectPitchHi(float[] samples, int lowFreqIdx)
         {
             var peakIdx = -1;
             var prevVal = 0.0f;
@@ -214,7 +214,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// <summary>
         /// Returns true if the level is above the specified value
         /// </summary>
-        static bool LevelIsAbove(float[] buffer, int len, float level)
+        private static bool LevelIsAbove(float[] buffer, int len, float level)
         {
             if (buffer == null || buffer.Length == 0)
                 return false;
@@ -231,7 +231,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// <summary>
         /// // 4-point, 3rd-order Hermite (x-form)
         /// </summary>
-        static float InterpolateHermite(float fY0, float fY1, float fY2, float fY3, float frac)
+        private static float InterpolateHermite(float fY0, float fY1, float fY2, float fY3, float frac)
         {
             var c1 = 0.5f * (fY2 - fY0);
             var c3 = 1.5f * (fY1 - fY2) + 0.5f * (fY3 - fY0);
@@ -244,12 +244,12 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// Linear interpolation
         /// nFrac is based on 1.0 = 256
         /// </summary>
-        static float InterpolateLinear(float y0, float y1, float frac) => y0 * (1.0f - frac) + y1 * frac;
+        private static float InterpolateLinear(float y0, float y1, float frac) => y0 * (1.0f - frac) + y1 * frac;
 
         /// <summary>
         /// Medium Low res SumAbsDiff
         /// </summary>
-        float RatioAbsDiffLinear(float[] samples, int freqIdx, int blockLen, int stepSize, bool hiRes)
+        private float RatioAbsDiffLinear(float[] samples, int freqIdx, int blockLen, int stepSize, bool hiRes)
         {
             if (hiRes && m_detectCurve[freqIdx] > 0.0f) return m_detectCurve[freqIdx];
 
@@ -278,7 +278,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         /// <summary>
         /// Medium High res SumAbsDiff
         /// </summary>
-        static float SumAbsDiffHermite(float[] samples, float fOffset, int blockLen, int stepSize)
+        private static float SumAbsDiffHermite(float[] samples, float fOffset, int blockLen, int stepSize)
         {
             var offsetInt = (int)fOffset;
             var offsetFrac = fOffset - offsetInt;
