@@ -6,24 +6,24 @@
   </PropertyGroup>
   <PropertyGroup Label="Nuget">
     <GenerateProgramFile>false</GenerateProgramFile>
-    <AssemblyName>osu.KaraokeFramework</AssemblyName>
+    <AssemblyName>osu.Framework.Microphone</AssemblyName>
     <RootNamespace>osu.Framework</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.1.9</Version>
+    <Version>1.0.0</Version>
     <Description>A framework written with osu!karaoke in mind.</Description>
     <Copyright>https://github.com/osu-Karaoke/osu-karaoke-framework</Copyright>
     <PackageProjectUrl>https://github.com/osu-Karaoke/osu-karaoke-framework</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/osu-Karaoke/osu-karaoke-framework</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/osu-Karaoke/osu-karaoke-framework.git</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageTags>osu-framework karaoke andy840119</PackageTags>
+    <PackageTags>osu-framework microphone andy840119</PackageTags>
     <Authors>andy840119</Authors>
     <Company>osu!Karaoke</Company>
     <Product>osu!Karaoke</Product>
     <PackageReleaseNotes>喵</PackageReleaseNotes>
-    <PackageId>osu.KaraokeFramework</PackageId>
+    <PackageId>osu.Framework.Microphone</PackageId>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup Label="Package References">
