@@ -23,7 +23,7 @@ namespace osu.Framework.Input.StateChanges
             var lastState = microphoneInputState.Microphone;
 
             // Update latest state into input state
-            microphoneInputState.Microphone.Sacle = State.Sacle;
+            microphoneInputState.Microphone.Pitch = State.Pitch;
             microphoneInputState.Microphone.Volumn = State.Volumn;
 
             // Trigger change

@@ -57,21 +57,8 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         private MicrophoneState lastState = new MicrophoneState();
 
-        void onPitchDetected(PitchRecord Record)
+        void onPitchDetected(MicrophoneState state)
         {
-            if (!(Record?.Pitch > 1))
-                return;
-
-            var frequency = Record.Pitch;
-            var note = Record.NoteName;
-            var cents = Record.MidiCents;
-
-            // TODO : implement value
-            var state = new MicrophoneState
-            {
-                Sacle = (float)frequency
-            };
-
             // Throw into pending input
             PendingInputs.Enqueue(new MicrophoneInput
             {

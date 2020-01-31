@@ -70,20 +70,20 @@ namespace osu.Framework.Tests.Visual.Input
 
             protected virtual bool OnMicrophoneStartSinging(MicrophoneStartSingingEvent e)
             {
-                _pitchText.Text = "Start : " + e.CurrentState.Microphone.Sacle.ToString();
+                _pitchText.Text = "Start : " + e.CurrentState.Microphone.Pitch.ToString();
                 return true;
             }
 
             protected virtual bool OnMicrophoneEndSinging(MicrophoneEndSingingEvent e)
             {
-                _pitchText.Text = "End : " + e.CurrentState.Microphone.Sacle.ToString();
+                _pitchText.Text = "End : " + e.CurrentState.Microphone.Pitch.ToString();
                 return true;
             }
 
             protected virtual bool OnMicrophoneSinging(MicrophoneSingingEvent e)
             {
-                var scale = e.CurrentState.Microphone.Sacle;
-                Y = -(scale - 50) * 5;
+                var scale = e.CurrentState.Microphone.Pitch;
+                Y = (float)-(scale - 50) * 5;
                 _pitchText.Text = "Singing : " + scale;
                 return true;
             }

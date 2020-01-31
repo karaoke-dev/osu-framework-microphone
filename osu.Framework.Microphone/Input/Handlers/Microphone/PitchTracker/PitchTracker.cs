@@ -1,6 +1,7 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Input.States;
 using System;
 
 namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
@@ -182,7 +183,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
                     }
 
                     // Log the pitch record
-                    PitchDetected?.Invoke(new PitchRecord(detectedPitch));
+                    PitchDetected?.Invoke(new MicrophoneState(detectedPitch));
 
                     CurrentPitchSamplePosition += SamplesPerPitchBlock;
                 }
@@ -272,6 +273,6 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
         }
         #endregion
 
-        public event Action<PitchRecord> PitchDetected;
+        public event Action<MicrophoneState> PitchDetected;
     }
 }
