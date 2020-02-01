@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using ManagedBass;
-using osu.Framework.Input.Handlers.Microphone.PitchTracker;
 using osu.Framework.Input.StateChanges;
 using osu.Framework.Input.States;
 using osu.Framework.Platform;

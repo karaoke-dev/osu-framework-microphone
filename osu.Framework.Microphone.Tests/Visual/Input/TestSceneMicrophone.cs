@@ -32,18 +32,19 @@ namespace osu.Framework.Tests.Visual.Input
 
         public class MicrophoneVisualization : CompositeDrawable
         {
-            private readonly SpriteText _pitchText;
+            private readonly Box background;
+            private readonly SpriteText pitchText;
 
             public MicrophoneVisualization()
             {
                 InternalChildren = new Drawable[]
                 {
-                    new Box
+                    background = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Colour = Color4.Red
+                        Colour = Color4.Blue
                     },
-                    _pitchText = new SpriteText
+                    pitchText = new SpriteText
                     {
                         Text = "detecting"
                     }
@@ -70,13 +71,15 @@ namespace osu.Framework.Tests.Visual.Input
 
             protected virtual bool OnMicrophoneStartSinging(MicrophoneStartSingingEvent e)
             {
-                _pitchText.Text = "Start : " + e.CurrentState.Microphone.Pitch.ToString();
+                pitchText.Text = "Start : " + e.CurrentState.Microphone.Pitch.ToString();
+                background.Colour = Color4.Red;
                 return true;
             }
 
             protected virtual bool OnMicrophoneEndSinging(MicrophoneEndSingingEvent e)
             {
-                _pitchText.Text = "End : " + e.CurrentState.Microphone.Pitch.ToString();
+                pitchText.Text = "End : " + e.CurrentState.Microphone.Pitch.ToString();
+                background.Colour = Color4.Yellow;
                 return true;
             }
 
@@ -84,7 +87,8 @@ namespace osu.Framework.Tests.Visual.Input
             {
                 var scale = e.CurrentState.Microphone.Pitch;
                 Y = (float)-(scale - 50) * 5;
-                _pitchText.Text = "Singing : " + scale;
+                pitchText.Text = "Singing : " + scale;
+                background.Colour = Color4.Blue;
                 return true;
             }
         }
