@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace osu.Framework.Input.Handlers.Microphone
 {
-    internal class OsuTKMicrophoneHandler : InputHandler
+    public class OsuTKMicrophoneHandler : InputHandler
     {
         public override bool IsActive => true;
         public override int Priority => 3;
