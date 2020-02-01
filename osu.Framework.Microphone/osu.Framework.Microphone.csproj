@@ -13,10 +13,10 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Version>1.0.0</Version>
     <Description>A framework written with osu!karaoke in mind.</Description>
-    <Copyright>https://github.com/osu-Karaoke/osu-karaoke-framework</Copyright>
-    <PackageProjectUrl>https://github.com/osu-Karaoke/osu-karaoke-framework</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/osu-Karaoke/osu-karaoke-framework</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/osu-Karaoke/osu-karaoke-framework.git</RepositoryUrl>
+    <Copyright>https://github.com/osu-Karaoke/osu-framework-microphone</Copyright>
+    <PackageProjectUrl>https://github.com/osu-Karaoke/osu-framework-microphone</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/osu-Karaoke/osu-framework-microphone</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/osu-Karaoke/osu-framework-microphone.git</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>osu-framework microphone andy840119</PackageTags>
     <Authors>andy840119</Authors>
