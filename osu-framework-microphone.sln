@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.852
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Framework.Microphone", "osu.Framework.Microphone\osu.Framework.Microphone.csproj", "{D0F85C61-800A-4645-8633-AC59208FA732}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Framework.Microphone.Tests", "osu.Framework.Microphone.Tests\osu.Framework.Microphone.Tests.csproj", "{C567CF87-3AD0-4FF3-B839-4502D23FD4D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0F85C61-800A-4645-8633-AC59208FA732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F85C61-800A-4645-8633-AC59208FA732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F85C61-800A-4645-8633-AC59208FA732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F85C61-800A-4645-8633-AC59208FA732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C567CF87-3AD0-4FF3-B839-4502D23FD4D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C567CF87-3AD0-4FF3-B839-4502D23FD4D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C567CF87-3AD0-4FF3-B839-4502D23FD4D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C567CF87-3AD0-4FF3-B839-4502D23FD4D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ADBBAB82-E0E1-4292-A023-F5E904EA052B}
+	EndGlobalSection
+EndGlobal
