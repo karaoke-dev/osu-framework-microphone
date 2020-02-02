@@ -13,7 +13,7 @@ namespace osu.Framework.Input.StateChanges
 
         public void Apply(InputState state, IInputStateChangeHandler handler)
         {
-            if (!(state is MicrophoneInputState microphoneInputState))
+            if (!(state is IMicrophoneInputState microphoneInputState))
                 throw new ArgumentException($"{nameof(state)} should be the type of {nameof(MicrophoneInputState)}");
 
             // Become last state

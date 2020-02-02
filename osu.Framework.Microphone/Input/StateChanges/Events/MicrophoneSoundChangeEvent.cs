@@ -13,7 +13,7 @@ namespace osu.Framework.Input.StateChanges.Events
         public MicrophoneSoundChangeEvent(InputState state, IInput input, MicrophoneState lastState)
             : base(state, input)
         {
-            if (!(state is MicrophoneInputState microphoneInputState))
+            if (!(state is IMicrophoneInputState microphoneInputState))
                 throw new ArgumentException($"{nameof(state)} should be the type of {nameof(MicrophoneInputState)}");
 
             LastState = lastState;
