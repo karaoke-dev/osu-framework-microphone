@@ -11,7 +11,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Description>A framework written with osu!karaoke in mind.</Description>
     <Copyright>https://github.com/osu-Karaoke/osu-framework-microphone</Copyright>
     <PackageProjectUrl>https://github.com/osu-Karaoke/osu-framework-microphone</PackageProjectUrl>

@@ -13,8 +13,8 @@ namespace osu.Framework.Input.StateChanges
 
         public void Apply(InputState state, IInputStateChangeHandler handler)
         {
-            if (!(state is MicrophoneInputState microphoneInputState))
-                throw new ArgumentException($"{nameof(state)} should be the type of {nameof(MicrophoneInputState)}");
+            if (!(state is IMicrophoneInputState microphoneInputState))
+                throw new ArgumentException($"{nameof(state)} should be the type of {nameof(IMicrophoneInputState)}");
 
             // Become last state
             var lastState = microphoneInputState.Microphone.Clone() as MicrophoneState;

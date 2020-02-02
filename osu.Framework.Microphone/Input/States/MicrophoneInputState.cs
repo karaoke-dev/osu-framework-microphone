@@ -3,9 +3,9 @@
 
 namespace osu.Framework.Input.States
 {
-    public class MicrophoneInputState : InputState
+    public class MicrophoneInputState : InputState, IMicrophoneInputState
     {
-        public readonly MicrophoneState Microphone;
+        public MicrophoneState Microphone { get; }
 
         public MicrophoneInputState(MicrophoneState microphone)
         {

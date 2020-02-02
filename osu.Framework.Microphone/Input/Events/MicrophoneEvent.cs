@@ -2,16 +2,19 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Input.States;
+using System;
 
 namespace osu.Framework.Input.Events
 {
     public abstract class MicrophoneEvent : UIEvent
     {
-        public new MicrophoneInputState CurrentState => (MicrophoneInputState)base.CurrentState;
+        public new IMicrophoneInputState CurrentState => (IMicrophoneInputState)base.CurrentState;
 
-        protected MicrophoneEvent(MicrophoneInputState state)
-            : base(state)
+        protected MicrophoneEvent(IMicrophoneInputState state)
+            : base(state as InputState)
         {
+            if (!(state is IMicrophoneInputState microphoneInputState))
+                throw new ArgumentException($"{nameof(state)} should be the type of {nameof(IMicrophoneInputState)}");
         }
     }
 }

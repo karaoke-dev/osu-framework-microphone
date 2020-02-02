@@ -39,7 +39,7 @@ namespace osu.Framework.Input
 
         protected virtual void HandleMicrophoneStateChange(MicrophoneSoundChangeEvent microphoneSoundChange)
         {
-            var inputState = microphoneSoundChange.State as MicrophoneInputState;
+            var inputState = microphoneSoundChange.State as IMicrophoneInputState;
             var lastState = microphoneSoundChange.LastState;
             var state = inputState.Microphone;
 
@@ -51,10 +51,10 @@ namespace osu.Framework.Input
                 microphoneSinging(inputState);
         }
 
-        private bool microphoneStartSinging(MicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneStartSingingEvent(state));
+        private bool microphoneStartSinging(IMicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneStartSingingEvent(state));
 
-        private bool microphoneEndSinging(MicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneEndSingingEvent(state));
+        private bool microphoneEndSinging(IMicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneEndSingingEvent(state));
 
-        private bool microphoneSinging(MicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneSingingEvent(state));
+        private bool microphoneSinging(IMicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneSingingEvent(state));
     }
 }
