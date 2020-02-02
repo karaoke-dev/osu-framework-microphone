@@ -5,9 +5,9 @@ using osu.Framework.Input.States;
 
 namespace osu.Framework.Input.Events
 {
-    public class MicrophoneStartSingingEvent : MicrophoneEvent
+    public class MicrophonePitchingEvent : MicrophoneEvent
     {
-        public MicrophoneStartSingingEvent(IMicrophoneInputState state)
+        public MicrophonePitchingEvent(IMicrophoneInputState state)
             : base(state)
         {
         }

@@ -55,35 +55,35 @@ namespace osu.Framework.Tests.Visual.Input
             {
                 switch (e)
                 {
-                    case MicrophoneStartSingingEvent microphoneStartSinging:
-                        return OnMicrophoneStartSinging(microphoneStartSinging);
+                    case MicrophoneStartPitchingEvent microphoneStartPitching:
+                        return OnMicrophoneStartSinging(microphoneStartPitching);
 
-                    case MicrophoneEndSingingEvent microphoneEndSinging:
-                        return OnMicrophoneEndSinging(microphoneEndSinging);
+                    case MicrophoneEndPitchingEvent microphoneEndPitching:
+                        return OnMicrophoneEndSinging(microphoneEndPitching);
 
-                    case MicrophoneSingingEvent microphoneSinging:
-                        return OnMicrophoneSinging(microphoneSinging);
+                    case MicrophonePitchingEvent microphonePitching:
+                        return OnMicrophoneSinging(microphonePitching);
 
                     default:
                         return base.Handle(e);
                 }
             }
 
-            protected virtual bool OnMicrophoneStartSinging(MicrophoneStartSingingEvent e)
+            protected virtual bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
                 pitchText.Text = "Start : " + e.CurrentState.Microphone.Pitch.ToString();
                 background.Colour = Color4.Red;
                 return true;
             }
 
-            protected virtual bool OnMicrophoneEndSinging(MicrophoneEndSingingEvent e)
+            protected virtual bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
             {
                 pitchText.Text = "End : " + e.CurrentState.Microphone.Pitch.ToString();
                 background.Colour = Color4.Yellow;
                 return true;
             }
 
-            protected virtual bool OnMicrophoneSinging(MicrophoneSingingEvent e)
+            protected virtual bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
                 var scale = e.CurrentState.Microphone.Pitch;
                 Y = (float)-(scale - 50) * 5;
