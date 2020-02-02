@@ -7,7 +7,7 @@ namespace osu.Framework.Input.Events
 {
     public class MicrophoneStartSingingEvent : MicrophoneEvent
     {
-        public MicrophoneStartSingingEvent(MicrophoneInputState state)
+        public MicrophoneStartSingingEvent(IMicrophoneInputState state)
             : base(state)
         {
         }
