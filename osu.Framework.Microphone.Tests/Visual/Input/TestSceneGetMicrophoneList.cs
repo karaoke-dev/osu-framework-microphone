@@ -16,7 +16,7 @@ namespace osu.Framework.Tests.Visual.Input
                 X = 100,
                 Y = 100,
                 Width = 300,
-                Items = manager.AudioDeviceNames
+                Items = manager.MicrophoneDeviceNames
             };
         }
     }
