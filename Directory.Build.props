@@ -5,8 +5,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup Label="License">
-    <None Include="$(MSBuildThisFileDirectory)osu-framework.licenseheader">
-      <Link>osu-framework.licenseheader</Link>
+    <None Include="$(MSBuildThisFileDirectory)osu-framework-microphone.licenseheader">
+      <Link>osu-framework-microphone.licenseheader</Link>
     </None>
   </ItemGroup>
   <ItemGroup Label="Resources">
@@ -24,18 +24,18 @@
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="All" />
   </ItemGroup>
   <PropertyGroup Label="Code Analysis">
-    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)CodeAnalysis\osu-framework.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)CodeAnalysis\osu-framework-microphone.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Label="NuGet">
-    <Authors>ppy Pty Ltd</Authors>
-    <Company>ppy Pty Ltd</Company>
-    <Copyright>Copyright (c) 2019 ppy Pty Ltd</Copyright>
-    <Product>osu!framework</Product>
+    <Authors>andy840119</Authors>
+    <Company>andy840119</Company>
+    <Copyright>Copyright (c) 2020 andy840119</Copyright>
+    <Product>osu!framework microphone extension</Product>
     <PackageReleaseNotes>Automated release.</PackageReleaseNotes>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseExpression>GPL</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/ppy/osu-framework</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ppy/osu-framework</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ppy/osu-framework-microphone</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ppy/osu-framework-microphone</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Label="Sourcelink3">
     <EnableSourceLink Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildRuntimeType)' != 'Core' ">false</EnableSourceLink>
