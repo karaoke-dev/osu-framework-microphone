@@ -4,3 +4,11 @@
 [![](https://img.shields.io/badge/月子我婆-passed-ff69b4.svg)](https://github.com/osu-Karaoke/osu-framework-microphone)
 
 Unofficial support for using microphone as a input device.
+
+## License
+
+This repo is under [GPL V3](LICENSE) license.
+
+## Thank to 
+
+[Pitch tracker demo](https://github.com/ManagedBass/Demo.WPF)
