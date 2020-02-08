@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input;
 using osu.Framework.Input.Events;
+using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Framework.Tests.Visual.Input
@@ -18,25 +19,81 @@ namespace osu.Framework.Tests.Visual.Input
             Child = new MicrophoneInputManager()
             {
                 RelativeSizeAxes = Axes.Both,
-                Children = new []
-                { 
-                    new MicrophoneVisualization
+                Children = new Drawable[]
+                {
+                    new MicrophonePitchVisualization
                     {
-                        Anchor = Anchor.Centre,
-                        Width = 100,
-                        Height = 100
+                        X = 50
+                    },
+                    new MicrophoneNoteVisualization
+                    {
+                        X = 200,
                     }
                 }
             };
         }
 
+        public class MicrophonePitchVisualization : MicrophoneVisualization
+        {
+            protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
+            {
+                var pitch = e.CurrentState.Microphone.Pitch;
+                BoxText.Text = "Pitch start : " + pitch;
+                return base.OnMicrophoneStartSinging(e);
+            }
+
+            protected override bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
+            {
+                var pitch = e.CurrentState.Microphone.Pitch;
+                BoxText.Text = "Pitch end : " + pitch;
+                return base.OnMicrophoneEndSinging(e);
+            }
+
+            protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
+            {
+                var pitch = e.CurrentState.Microphone.Pitch;
+                Y = (float)-(pitch - 50) * 5;
+                BoxText.Text = "Pitching : " + pitch;
+                return base.OnMicrophoneSinging(e);
+            }
+        }
+
+        public class MicrophoneNoteVisualization : MicrophoneVisualization
+        {
+            protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
+            {
+                var note = e.CurrentState.Microphone.Note;
+                BoxText.Text = "Note start : " + note;
+                return base.OnMicrophoneStartSinging(e);
+            }
+
+            protected override bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
+            {
+                var note = e.CurrentState.Microphone.Note;
+                BoxText.Text = "Note end : " + note;
+                return base.OnMicrophoneEndSinging(e);
+            }
+
+            protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
+            {
+                var note = e.CurrentState.Microphone.Note;
+                Y = -(note - 50) * 5;
+                BoxText.Text = "Noting : " + note;
+                return base.OnMicrophoneSinging(e);
+            }
+        }
+
         public class MicrophoneVisualization : CompositeDrawable
         {
             private readonly Box background;
-            private readonly SpriteText pitchText;
+
+            public SpriteText BoxText { get; }
 
             public MicrophoneVisualization()
             {
+                Width = 100;
+                Height = 100;
+                Anchor = Anchor.CentreLeft;
                 InternalChildren = new Drawable[]
                 {
                     background = new Box
@@ -44,7 +101,7 @@ namespace osu.Framework.Tests.Visual.Input
                         RelativeSizeAxes = Axes.Both,
                         Colour = Color4.Blue
                     },
-                    pitchText = new SpriteText
+                    BoxText = new SpriteText
                     {
                         Text = "detecting"
                     }
@@ -71,25 +128,20 @@ namespace osu.Framework.Tests.Visual.Input
 
             protected virtual bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
-                pitchText.Text = "Start : " + e.CurrentState.Microphone.Pitch.ToString();
                 background.Colour = Color4.Red;
-                return true;
+                return false;
             }
 
             protected virtual bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
             {
-                pitchText.Text = "End : " + e.CurrentState.Microphone.Pitch.ToString();
                 background.Colour = Color4.Yellow;
-                return true;
+                return false;
             }
 
             protected virtual bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
-                var scale = e.CurrentState.Microphone.Pitch;
-                Y = (float)-(scale - 50) * 5;
-                pitchText.Text = "Singing : " + scale;
                 background.Colour = Color4.Blue;
-                return true;
+                return false;
             }
         }
     }
