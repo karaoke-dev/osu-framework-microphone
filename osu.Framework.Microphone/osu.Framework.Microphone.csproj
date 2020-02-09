@@ -12,7 +12,7 @@
     <IsPackable>true</IsPackable>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Version>1.0.2</Version>
-    <Description>A framework written with osu!karaoke in mind.</Description>
+    <Description>Unofficial osu!framework extension for using microphon as input device.</Description>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>osu-framework microphone andy840119</PackageTags>
     <Authors>andy840119</Authors>
