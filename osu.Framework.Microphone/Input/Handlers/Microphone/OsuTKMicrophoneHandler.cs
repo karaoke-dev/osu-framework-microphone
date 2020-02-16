@@ -32,33 +32,29 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         public override bool Initialize(GameHost host)
         {
-            try
+            Enabled.BindValueChanged(e =>
             {
-                // Open microphone device if available
-                Bass.RecordInit(deviceIndex);
-                stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, Procedure);
-                pitchTracker.PitchDetected += onPitchDetected;
-
-                Enabled.BindDisabledChanged(enabled =>
+                if (e.NewValue)
                 {
-                    if (enabled)
-                    {
-                        // Start channel
-                        Bass.ChannelPlay(stream);
-                    }
-                    else
-                    {
-                        // Pause channel
-                        Bass.ChannelPause(stream);
-                    }
-                }, true);
+                    // Open microphone device if available
+                    Bass.RecordInit(deviceIndex);
+                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, Procedure);
+                    pitchTracker.PitchDetected += onPitchDetected;
 
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+                    // Start channel
+                    Bass.ChannelPlay(stream);
+                }
+                else
+                {
+                    // Pause channel
+                    Bass.ChannelPause(stream);
+
+                    // Close microphone
+                    Bass.RecordFree();
+                }
+            }, true);
+
+            return true;
         }
 
         private float[] buffer;
@@ -97,9 +93,6 @@ namespace osu.Framework.Input.Handlers.Microphone
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-            // Close microphone
-            Bass.RecordFree();
         }
     }
 }
