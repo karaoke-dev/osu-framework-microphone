@@ -39,6 +39,8 @@ namespace osu.Framework.Input.States
             }
         }
 
+        public float[] RawData { get; private set; }
+
         public float Note { get; private set; }
 
         /// <summary>
@@ -56,9 +58,10 @@ namespace osu.Framework.Input.States
         
         }
 
-        public MicrophoneState(double pitch)
+        public MicrophoneState(double pitch, float[] rawData)
         {
             Pitch = pitch;
+            RawData = rawData;
         }
 
         public bool Equals(MicrophoneState other)
@@ -69,7 +72,7 @@ namespace osu.Framework.Input.States
         public object Clone()
         {
             if (HasSound)
-                return new MicrophoneState(Pitch);
+                return new MicrophoneState(Pitch, RawData);
 
             return new MicrophoneState();
         }

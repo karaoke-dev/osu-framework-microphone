@@ -190,7 +190,7 @@ namespace osu.Framework.Input.Handlers.Microphone.PitchTracker
                     }
 
                     // Log the pitch record
-                    PitchDetected?.Invoke(new MicrophoneState(detectedPitch));
+                    PitchDetected?.Invoke(new MicrophoneState(detectedPitch, null));
 
                     CurrentPitchSamplePosition += SamplesPerPitchBlock;
                 }
