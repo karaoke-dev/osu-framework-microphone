@@ -32,16 +32,33 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         public override bool Initialize(GameHost host)
         {
-            // Open microphone device if available
-            Bass.RecordInit(deviceIndex);
-            stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, Procedure);
+            try
+            {
+                // Open microphone device if available
+                Bass.RecordInit(deviceIndex);
+                stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, Procedure);
+                pitchTracker.PitchDetected += onPitchDetected;
 
-            pitchTracker.PitchDetected += onPitchDetected;
+                Enabled.BindDisabledChanged(enabled =>
+                {
+                    if (enabled)
+                    {
+                        // Start channel
+                        Bass.ChannelPlay(stream);
+                    }
+                    else
+                    {
+                        // Pause channel
+                        Bass.ChannelPause(stream);
+                    }
+                }, true);
 
-            // Start channel
-            Bass.ChannelPlay(stream);
-
-            return true;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private float[] buffer;
@@ -80,9 +97,6 @@ namespace osu.Framework.Input.Handlers.Microphone
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-            // Pause channel
-            Bass.ChannelPause(stream);
 
             // Close microphone
             Bass.RecordFree();
