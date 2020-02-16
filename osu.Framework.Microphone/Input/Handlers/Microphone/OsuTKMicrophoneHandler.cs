@@ -32,6 +32,8 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         public override bool Initialize(GameHost host)
         {
+            pitchTracker.PitchDetected += onPitchDetected;
+
             Enabled.BindValueChanged(e =>
             {
                 if (e.NewValue)
@@ -39,7 +41,6 @@ namespace osu.Framework.Input.Handlers.Microphone
                     // Open microphone device if available
                     Bass.RecordInit(deviceIndex);
                     stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, Procedure);
-                    pitchTracker.PitchDetected += onPitchDetected;
 
                     // Start channel
                     Bass.ChannelPlay(stream);
