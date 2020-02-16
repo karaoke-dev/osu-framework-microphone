@@ -12,7 +12,7 @@ namespace osu.Framework.Input.Handlers.Microphone
 {
     public class OsuTKMicrophoneHandler : InputHandler
     {
-        public override bool IsActive => true;
+        public override bool IsActive => Bass.RecordingDeviceCount > 0;
         public override int Priority => 3;
 
         private readonly PitchTracker.PitchTracker pitchTracker = new PitchTracker.PitchTracker();
@@ -32,14 +32,28 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         public override bool Initialize(GameHost host)
         {
-            // Open microphone device if available
-            Bass.RecordInit(deviceIndex);
-            stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, Procedure);
-
             pitchTracker.PitchDetected += onPitchDetected;
 
-            // Start channel
-            Bass.ChannelPlay(stream);
+            Enabled.BindValueChanged(e =>
+            {
+                if (e.NewValue)
+                {
+                    // Open microphone device if available
+                    Bass.RecordInit(deviceIndex);
+                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, Procedure);
+
+                    // Start channel
+                    Bass.ChannelPlay(stream);
+                }
+                else
+                {
+                    // Pause channel
+                    Bass.ChannelPause(stream);
+
+                    // Close microphone
+                    Bass.RecordFree();
+                }
+            }, true);
 
             return true;
         }
@@ -80,12 +94,6 @@ namespace osu.Framework.Input.Handlers.Microphone
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-            // Pause channel
-            Bass.ChannelPause(stream);
-
-            // Close microphone
-            Bass.RecordFree();
         }
     }
 }
