@@ -12,7 +12,7 @@ namespace osu.Framework.Input.Handlers.Microphone
 {
     public class OsuTKMicrophoneHandler : InputHandler
     {
-        public override bool IsActive => true;
+        public override bool IsActive => Bass.RecordingDeviceCount > 0;
         public override int Priority => 3;
 
         private readonly PitchTracker.PitchTracker pitchTracker = new PitchTracker.PitchTracker();
