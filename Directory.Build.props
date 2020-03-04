@@ -34,8 +34,8 @@
     <PackageReleaseNotes>Automated release.</PackageReleaseNotes>
     <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/ppy/osu-framework-microphone</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ppy/osu-framework-microphone</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/osu-Karaoke/osu-framework-microphone</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/osu-Karaoke/osu-framework-microphone</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Label="Sourcelink3">
     <EnableSourceLink Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildRuntimeType)' != 'Core' ">false</EnableSourceLink>
