@@ -10,8 +10,8 @@ namespace osu.Framework.Input
 {
     public class MicrophoneManager
     {
-        private List<DeviceInfo> microphoneDevices = new List<DeviceInfo>();
-        private List<string> microphoneDeviceNames = new List<string>();
+        private readonly List<DeviceInfo> microphoneDevices;
+        private readonly List<string> microphoneDeviceNames;
 
         /// <summary>
         /// The names of all available audio devices.
@@ -26,7 +26,7 @@ namespace osu.Framework.Input
             // Get device on ctor
             microphoneDevices = EnumerateAllDevices().ToList();
             microphoneDeviceNames = microphoneDevices.Where(d => d.IsEnabled && d.Type == DeviceType.Microphone)
-                .Select(d => d.Name).ToList();
+                                                     .Select(d => d.Name).ToList();
         }
 
         protected virtual IEnumerable<DeviceInfo> EnumerateAllDevices()

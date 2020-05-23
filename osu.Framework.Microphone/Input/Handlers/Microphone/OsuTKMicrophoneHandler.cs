@@ -32,7 +32,7 @@ namespace osu.Framework.Input.Handlers.Microphone
                 {
                     // Open microphone device if available
                     Bass.RecordInit(deviceIndex);
-                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, Procedure);
+                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, procedure);
 
                     // Start channel
                     Bass.ChannelPlay(stream);
@@ -52,17 +52,17 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         private float[] buffer;
 
-        private bool Procedure(int Handle, IntPtr Buffer, int Length, IntPtr User)
+        private bool procedure(int handle, IntPtr buffer, int length, IntPtr user)
         {
             // Read and save buffer
-            if (buffer == null || buffer.Length < Length / 4)
-                buffer = new float[Length / 4];
+            if (this.buffer == null || this.buffer.Length < length / 4)
+                this.buffer = new float[length / 4];
 
-            Marshal.Copy(Buffer, buffer, 0, Length / 4);
+            Marshal.Copy(buffer, this.buffer, 0, length / 4);
 
             // Process buffer
-            var pitch = Pitch.FromYin(buffer, 44100, low: 40, high: 1000);
-            //var loudness = Perceptual.Loudness(buffer);
+            var pitch = Pitch.FromYin(this.buffer, 44100, low: 40, high: 1000);
+            //var loudness = Perceptual.Loudness(this.buffer);
             onPitchDetected(new MicrophoneState(pitch, 0));
 
             return true;
@@ -70,7 +70,7 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         private MicrophoneState lastState = new MicrophoneState();
 
-        void onPitchDetected(MicrophoneState state)
+        private void onPitchDetected(MicrophoneState state)
         {
             // do not continuous sending no sound event
             if (!state.HasSound && lastState.HasSound == state.HasSound)
@@ -83,11 +83,6 @@ namespace osu.Framework.Input.Handlers.Microphone
             });
 
             lastState = state;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
         }
     }
 }

@@ -7,10 +7,10 @@ namespace osu.Framework.Input.States
 {
     public class MicrophoneState : IEquatable<MicrophoneState>, ICloneable
     {
-        private static readonly double InverseLog2 = 1.0 / Math.Log10(2.0);
+        private static readonly double inverse_log2 = 1.0 / Math.Log10(2.0);
 
-        public const int MinMidiNoteA0 = 21,
-                         MaxMidiNoteC8 = 108;
+        public const int MIN_MIDI_NOTE_A0 = 21,
+                         MAX_MIDI_NOTE_C8 = 108;
 
         private double pitch;
 
@@ -33,7 +33,7 @@ namespace osu.Framework.Input.States
                 }
                 else
                 {
-                    var fNote = (float)(12 * Math.Log10(pitch / 55) * InverseLog2) + 33;
+                    var fNote = (float)(12 * Math.Log10(pitch / 55) * inverse_log2) + 33;
                     Note = (fNote + 0.5f);
                 }
             }
@@ -42,9 +42,9 @@ namespace osu.Framework.Input.States
         public float Note { get; private set; }
 
         /// <summary>
-        /// Detected volumn
+        /// Detected loudness
         /// </summary>
-        public float Volumn { get; set; }
+        public float Loudness { get; set; }
 
         /// <summary>
         /// Detected sound or not
@@ -52,27 +52,20 @@ namespace osu.Framework.Input.States
         public bool HasSound => Pitch != 0;
 
         public MicrophoneState()
-        { 
-        
+        {
         }
 
         public MicrophoneState(double pitch, float loudness)
         {
             Pitch = pitch;
-            Volumn = loudness;
+            Loudness = loudness;
         }
 
         public bool Equals(MicrophoneState other)
         {
-            return Pitch == other.Pitch && Volumn == other.Volumn;
+            return Pitch == other.Pitch && Loudness == other.Loudness;
         }
 
-        public object Clone()
-        {
-            if (HasSound)
-                return new MicrophoneState(Pitch, Volumn);
-
-            return new MicrophoneState();
-        }
+        public object Clone() => HasSound ? new MicrophoneState(Pitch, Loudness) : new MicrophoneState();
     }
 }
