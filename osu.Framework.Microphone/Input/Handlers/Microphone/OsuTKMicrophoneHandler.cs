@@ -61,9 +61,9 @@ namespace osu.Framework.Input.Handlers.Microphone
             Marshal.Copy(Buffer, buffer, 0, Length / 4);
 
             // Process buffer
-            var pitch = Pitch.FromAutoCorrelation(buffer, 44100, low: 50, high: 1000);
-            var loudness = Perceptual.Loudness(buffer);
-            onPitchDetected(new MicrophoneState(pitch, loudness));
+            var pitch = Pitch.FromYin(buffer, 44100, low: 40, high: 1000);
+            //var loudness = Perceptual.Loudness(buffer);
+            onPitchDetected(new MicrophoneState(pitch, 0));
 
             return true;
         }
