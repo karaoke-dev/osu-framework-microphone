@@ -86,9 +86,9 @@ namespace osu.Framework.Tests.Visual.Input
         {
             private readonly Box background;
 
-            public SpriteText BoxText { get; }
+            protected SpriteText BoxText { get; }
 
-            public MicrophoneVisualization()
+            protected MicrophoneVisualization()
             {
                 Width = 100;
                 Height = 100;

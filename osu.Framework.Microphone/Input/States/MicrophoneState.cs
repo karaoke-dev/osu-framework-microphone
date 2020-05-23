@@ -34,7 +34,7 @@ namespace osu.Framework.Input.States
                 else
                 {
                     var fNote = (float)(12 * Math.Log10(pitch / 55) * inverse_log2) + 33;
-                    Note = (fNote + 0.5f);
+                    Note = fNote + 0.5f;
                 }
             }
         }

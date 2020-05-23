@@ -39,7 +39,7 @@ namespace osu.Framework.Input
 
             if (!lastState.HasSound && state.HasSound)
                 microphoneStartSinging(inputState);
-            else if(lastState.HasSound && !state.HasSound)
+            else if (lastState.HasSound && !state.HasSound)
                 microphoneEndSinging(inputState);
             else
                 microphoneSinging(inputState);
