@@ -56,9 +56,10 @@ namespace osu.Framework.Input.States
         
         }
 
-        public MicrophoneState(double pitch)
+        public MicrophoneState(double pitch, float loudness)
         {
             Pitch = pitch;
+            Volumn = loudness;
         }
 
         public bool Equals(MicrophoneState other)
@@ -69,7 +70,7 @@ namespace osu.Framework.Input.States
         public object Clone()
         {
             if (HasSound)
-                return new MicrophoneState(Pitch);
+                return new MicrophoneState(Pitch, Volumn);
 
             return new MicrophoneState();
         }

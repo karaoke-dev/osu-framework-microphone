@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using ManagedBass;
+using NWaves.Features;
 using osu.Framework.Input.StateChanges;
 using osu.Framework.Input.States;
 using osu.Framework.Platform;
@@ -15,7 +16,6 @@ namespace osu.Framework.Input.Handlers.Microphone
         public override bool IsActive => Bass.RecordingDeviceCount > 0;
         public override int Priority => 3;
 
-        private readonly PitchTracker.PitchTracker pitchTracker = new PitchTracker.PitchTracker();
         private readonly int deviceIndex;
         private int stream;
 
@@ -24,16 +24,8 @@ namespace osu.Framework.Input.Handlers.Microphone
             deviceIndex = device;
         }
 
-        public float DetectLevelThreshold
-        {
-            get => pitchTracker.DetectLevelThreshold;
-            set => pitchTracker.DetectLevelThreshold = value;
-        }
-
         public override bool Initialize(GameHost host)
         {
-            pitchTracker.PitchDetected += onPitchDetected;
-
             Enabled.BindValueChanged(e =>
             {
                 if (e.NewValue)
@@ -69,7 +61,9 @@ namespace osu.Framework.Input.Handlers.Microphone
             Marshal.Copy(Buffer, buffer, 0, Length / 4);
 
             // Process buffer
-            pitchTracker.ProcessBuffer(buffer);
+            var pitch = Pitch.FromAutoCorrelation(buffer, 44100, low: 50, high: 1000);
+            var loudness = Perceptual.Loudness(buffer);
+            onPitchDetected(new MicrophoneState(pitch, loudness));
 
             return true;
         }
