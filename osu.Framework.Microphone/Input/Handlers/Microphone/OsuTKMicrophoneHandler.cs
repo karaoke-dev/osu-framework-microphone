@@ -32,7 +32,7 @@ namespace osu.Framework.Input.Handlers.Microphone
                 {
                     // Open microphone device if available
                     Bass.RecordInit(deviceIndex);
-                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, procedure);
+                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 10, procedure);
 
                     // Start channel
                     Bass.ChannelPlay(stream);
