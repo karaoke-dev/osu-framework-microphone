@@ -3,6 +3,8 @@
 
 using ManagedBass;
 using NWaves.Features;
+using NWaves.Signals;
+using NWaves.Transforms;
 using osu.Framework.Input.StateChanges;
 using osu.Framework.Input.States;
 using osu.Framework.Platform;
@@ -60,11 +62,15 @@ namespace osu.Framework.Input.Handlers.Microphone
 
             Marshal.Copy(buffer, this.buffer, 0, length / 4);
 
-            // Process buffer
+            // Process pitch
             var pitch = Pitch.FromYin(this.buffer, 44100, low: 40, high: 1000);
-            //var loudness = Perceptual.Loudness(this.buffer);
-            onPitchDetected(new MicrophoneState(pitch, 0));
 
+            // Process loudness
+            var spectrum = new Fft(512).PowerSpectrum(new DiscreteSignal(44100, this.buffer)).Samples;
+            var loudness = Perceptual.Loudness(spectrum);
+
+            // Send new event
+            onPitchDetected(new MicrophoneState(pitch, loudness));
             return true;
         }
 
