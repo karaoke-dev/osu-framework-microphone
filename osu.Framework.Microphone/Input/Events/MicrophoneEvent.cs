@@ -13,7 +13,7 @@ namespace osu.Framework.Input.Events
         protected MicrophoneEvent(IMicrophoneInputState state)
             : base(state as InputState)
         {
-            if (!(state is IMicrophoneInputState microphoneInputState))
+            if (state == null)
                 throw new ArgumentException($"{nameof(state)} should be the type of {nameof(IMicrophoneInputState)}");
         }
     }

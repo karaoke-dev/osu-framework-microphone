@@ -21,7 +21,7 @@ namespace osu.Framework.Input.StateChanges
 
             // Update latest state into input state
             microphoneInputState.Microphone.Pitch = State.Pitch;
-            microphoneInputState.Microphone.Volumn = State.Volumn;
+            microphoneInputState.Microphone.Loudness = State.Loudness;
 
             // Trigger change
             handler.HandleInputStateChange(new MicrophoneSoundChangeEvent(state, this, lastState));

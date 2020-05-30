@@ -19,12 +19,6 @@ namespace osu.Framework.Input
             AddHandler(handler = new OsuTKMicrophoneHandler(device));
         }
 
-        public float DetectLevelThreshold
-        {
-            get => handler.DetectLevelThreshold;
-            set => handler.DetectLevelThreshold = value;
-        }
-
         public override void HandleInputStateChange(InputStateChangeEvent inputStateChange)
         {
             switch (inputStateChange)
@@ -45,7 +39,7 @@ namespace osu.Framework.Input
 
             if (!lastState.HasSound && state.HasSound)
                 microphoneStartSinging(inputState);
-            else if(lastState.HasSound && !state.HasSound)
+            else if (lastState.HasSound && !state.HasSound)
                 microphoneEndSinging(inputState);
             else
                 microphoneSinging(inputState);

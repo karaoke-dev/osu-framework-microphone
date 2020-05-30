@@ -18,4 +18,6 @@ This repo is under [GPL V3](LICENSE) license.
 
 ## Thank to 
 
-[Pitch tracker demo](https://github.com/ManagedBass/Demo.WPF)
+[Pitch tracker demo](https://github.com/ManagedBass/Demo.WPF) for demo use how to interact with microphone device
+
+[NWaves](https://github.com/ar1st0crat/NWaves) for providing pitch tracking algorithm.

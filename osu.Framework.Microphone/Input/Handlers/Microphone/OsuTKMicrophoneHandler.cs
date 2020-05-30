@@ -2,6 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using ManagedBass;
+using NWaves.Features;
+using NWaves.Signals;
+using NWaves.Transforms;
 using osu.Framework.Input.StateChanges;
 using osu.Framework.Input.States;
 using osu.Framework.Platform;
@@ -15,7 +18,6 @@ namespace osu.Framework.Input.Handlers.Microphone
         public override bool IsActive => Bass.RecordingDeviceCount > 0;
         public override int Priority => 3;
 
-        private readonly PitchTracker.PitchTracker pitchTracker = new PitchTracker.PitchTracker();
         private readonly int deviceIndex;
         private int stream;
 
@@ -24,23 +26,15 @@ namespace osu.Framework.Input.Handlers.Microphone
             deviceIndex = device;
         }
 
-        public float DetectLevelThreshold
-        {
-            get => pitchTracker.DetectLevelThreshold;
-            set => pitchTracker.DetectLevelThreshold = value;
-        }
-
         public override bool Initialize(GameHost host)
         {
-            pitchTracker.PitchDetected += onPitchDetected;
-
             Enabled.BindValueChanged(e =>
             {
                 if (e.NewValue)
                 {
                     // Open microphone device if available
                     Bass.RecordInit(deviceIndex);
-                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 60, Procedure);
+                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 10, procedure);
 
                     // Start channel
                     Bass.ChannelPlay(stream);
@@ -60,23 +54,29 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         private float[] buffer;
 
-        private bool Procedure(int Handle, IntPtr Buffer, int Length, IntPtr User)
+        private bool procedure(int handle, IntPtr buffer, int length, IntPtr user)
         {
             // Read and save buffer
-            if (buffer == null || buffer.Length < Length / 4)
-                buffer = new float[Length / 4];
+            if (this.buffer == null || this.buffer.Length < length / 4)
+                this.buffer = new float[length / 4];
 
-            Marshal.Copy(Buffer, buffer, 0, Length / 4);
+            Marshal.Copy(buffer, this.buffer, 0, length / 4);
 
-            // Process buffer
-            pitchTracker.ProcessBuffer(buffer);
+            // Process pitch
+            var pitch = Pitch.FromYin(this.buffer, 44100, low: 40, high: 1000);
 
+            // Process loudness
+            var spectrum = new Fft(512).PowerSpectrum(new DiscreteSignal(44100, this.buffer)).Samples;
+            var loudness = Perceptual.Loudness(spectrum);
+
+            // Send new event
+            onPitchDetected(new MicrophoneState(pitch, loudness));
             return true;
         }
 
         private MicrophoneState lastState = new MicrophoneState();
 
-        void onPitchDetected(MicrophoneState state)
+        private void onPitchDetected(MicrophoneState state)
         {
             // do not continuous sending no sound event
             if (!state.HasSound && lastState.HasSound == state.HasSound)
@@ -89,11 +89,6 @@ namespace osu.Framework.Input.Handlers.Microphone
             });
 
             lastState = state;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
         }
     }
 }

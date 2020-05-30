@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input;
 using osu.Framework.Input.Events;
-using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Framework.Tests.Visual.Input
@@ -16,7 +15,7 @@ namespace osu.Framework.Tests.Visual.Input
     {
         public TestSceneMicrophone()
         {
-            Child = new MicrophoneInputManager()
+            Child = new MicrophoneInputManager
             {
                 RelativeSizeAxes = Axes.Both,
                 Children = new Drawable[]
@@ -25,7 +24,7 @@ namespace osu.Framework.Tests.Visual.Input
                     {
                         X = 50
                     },
-                    new MicrophoneNoteVisualization
+                    new MicrophoneLoudnessVisualization
                     {
                         X = 200,
                     }
@@ -52,33 +51,33 @@ namespace osu.Framework.Tests.Visual.Input
             protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
                 var pitch = e.CurrentState.Microphone.Pitch;
-                Y = (float)-(pitch - 50) * 5;
+                Y = (float)-(pitch - 50);
                 BoxText.Text = "Pitching : " + pitch;
                 return base.OnMicrophoneSinging(e);
             }
         }
 
-        public class MicrophoneNoteVisualization : MicrophoneVisualization
+        public class MicrophoneLoudnessVisualization : MicrophoneVisualization
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
-                var note = e.CurrentState.Microphone.Note;
-                BoxText.Text = "Note start : " + note;
+                var loudness = e.CurrentState.Microphone.Loudness;
+                BoxText.Text = "Loudness start : " + loudness;
                 return base.OnMicrophoneStartSinging(e);
             }
 
             protected override bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
             {
-                var note = e.CurrentState.Microphone.Note;
-                BoxText.Text = "Note end : " + note;
+                var loudness = e.CurrentState.Microphone.Loudness;
+                BoxText.Text = "Loudness end : " + loudness;
                 return base.OnMicrophoneEndSinging(e);
             }
 
             protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
-                var note = e.CurrentState.Microphone.Note;
-                Y = -(note - 50) * 5;
-                BoxText.Text = "Noting : " + note;
+                var loudness = e.CurrentState.Microphone.Loudness;
+                Y = -(loudness - 50) * 5;
+                BoxText.Text = "Loudness : " + loudness;
                 return base.OnMicrophoneSinging(e);
             }
         }
@@ -87,9 +86,9 @@ namespace osu.Framework.Tests.Visual.Input
         {
             private readonly Box background;
 
-            public SpriteText BoxText { get; }
+            protected SpriteText BoxText { get; }
 
-            public MicrophoneVisualization()
+            protected MicrophoneVisualization()
             {
                 Width = 100;
                 Height = 100;
