@@ -8,6 +8,12 @@
 
 Unofficial support for using microphone as a input device.
 
+Note: 
+
+Because osx 10.14 need to get microphone permission, so might not work properly.
+
+Android and ios device not tested yet, but should modify plist or manifest i guess.
+
 ## Nuget
 
 [osu.Framework.Microphone](https://www.nuget.org/packages/osu.Framework.Microphone)
