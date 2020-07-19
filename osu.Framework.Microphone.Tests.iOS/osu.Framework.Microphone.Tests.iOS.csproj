@@ -44,13 +44,14 @@
       <Project>{C76BF5B3-985E-4D39-95FE-97C9C879B83A}</Project>
       <Name>osu.Framework.Microphone</Name>
     </ProjectReference>
-    <ProjectReference Include="..\osu.Framework.Microphone.iOS\osu.Framework.Microphone.iOS.csproj">
-      <Project>{BBC0D18F-8595-43A6-AE61-5BF36A072CCE}</Project>
-      <Name>osu.Framework.Microphone.iOS</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ppy.osu.Framework.iOS">
+      <Version>2020.707.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
