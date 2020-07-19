@@ -22,21 +22,16 @@ namespace osu.Framework.Input.States
         /// </summary>
         public bool HasSound => Pitch != 0;
 
-        public MicrophoneState()
-        {
-        }
-
-        public MicrophoneState(float pitch, float loudness)
-        {
-            Pitch = pitch;
-            Loudness = loudness;
-        }
-
         public bool Equals(MicrophoneState other)
         {
             return Pitch == other.Pitch && Loudness == other.Loudness;
         }
 
-        public object Clone() => HasSound ? new MicrophoneState(Pitch, Loudness) : new MicrophoneState();
+        public object Clone() => HasSound ? new MicrophoneState { Pitch = Pitch, Loudness = Loudness } : new MicrophoneState();
+
+        public override string ToString()
+        {
+            return $@"Pitch: {Pitch}, Loudness: {Loudness}";
+        }
     }
 }

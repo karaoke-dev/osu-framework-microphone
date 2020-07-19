@@ -70,7 +70,7 @@ namespace osu.Framework.Input.Handlers.Microphone
             var loudness = Perceptual.Loudness(spectrum);
 
             // Send new event
-            onPitchDetected(new MicrophoneState(pitch, loudness));
+            onPitchDetected(new MicrophoneState { Pitch = pitch, Loudness = loudness });
             return true;
         }
 

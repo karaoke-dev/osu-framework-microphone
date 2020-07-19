@@ -51,7 +51,7 @@ namespace osu.Framework.Tests.Visual.Input
             protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
                 var pitch = e.CurrentState.Microphone.Pitch;
-                Y = (float)-(pitch - 50);
+                Y = -(pitch - 50);
                 BoxText.Text = "Pitching : " + pitch;
                 return base.OnMicrophoneSinging(e);
             }
