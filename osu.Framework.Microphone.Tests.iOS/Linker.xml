@@ -6,7 +6,7 @@
     <assembly fullname="osu.Framework.iOS">
         <type fullname="*" />
     </assembly>
-    <assembly fullname="osu.Framework.Tests">
+    <assembly fullname="osu.Framework.Microphone.Tests">
         <type fullname="*" />
     </assembly>
 </linker>
