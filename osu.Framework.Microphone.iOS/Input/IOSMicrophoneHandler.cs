@@ -10,7 +10,7 @@ namespace osu.Framework.iOS.Input
     {
         public override bool IsActive => throw new System.NotImplementedException();
 
-        public IOSMicrophoneHandler(int device) : base(device)
+        public IOSMicrophoneHandler() : base(-1)
         {
         }
 
