@@ -3,16 +3,25 @@
     <TargetFramework>xamarinios10</TargetFramework>
     <OutputType>Library</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AssemblyTitle>osu!framework iOS</AssemblyTitle>
-    <AssemblyName>osu.Framework.iOS</AssemblyName>
+    <AssemblyName>osu.Framework.Microphone.iOS</AssemblyName>
     <RootNamespace>osu.Framework.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <Description>A 2D application/game framework written with rhythm games in mind.</Description>
+    <Description>Unofficial osu!framework extension for using microphon as input device.</Description>
   </PropertyGroup>
   <PropertyGroup Label="Nuget">
-    <Title>osu!framework iOS</Title>
-    <PackageId>ppy.osu.Framework.iOS</PackageId>
-    <PackageTags>osu game framework</PackageTags>
+    <GenerateProgramFile>false</GenerateProgramFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Version>1.0.10</Version>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>osu-framework microphone andy840119</PackageTags>
+    <Authors>andy840119</Authors>
+    <Company>osu!Karaoke</Company>
+    <Product>osu!Karaoke</Product>
+    <PackageReleaseNotes>喵</PackageReleaseNotes>
+    <PackageId>osu.Framework.Microphone.iOS</PackageId>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -21,11 +30,10 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\osu.Framework\osu.Framework.csproj" />
+    <ProjectReference Include="..\osu.Framework.Microphone\osu.Framework.Microphone.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ppy.osuTK.iOS" Version="1.0.159" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />
+    <PackageReference Include="ppy.osu.Framework.iOS" Version="2020.722.0" />
   </ItemGroup>
   <ItemGroup>
     <NativeLibs Include="$(MSBuildThisFileDirectory)\*.a" />
