@@ -23,7 +23,7 @@ namespace osu.Framework.iOS.Input
 
             session.RequestRecordPermission((granted) =>
             {
-                Logger.Log($"Audio Permission: {granted}", LoggingTarget.Information, LogLevel.Verbose);
+                Logger.Log($"Audio Permission: {granted}", LoggingTarget.Information);
 
                 if (granted)
                 {
@@ -38,7 +38,7 @@ namespace osu.Framework.iOS.Input
                         else
                         {
                             success = base.Initialize(host);
-                            Logger.Log($"Microphone get permission status : {success}", LoggingTarget.Information, LogLevel.Verbose);
+                            Logger.Log($"Microphone get permission status : {success}", LoggingTarget.Information);
                         }
                     }
                     else

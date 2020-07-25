@@ -6,6 +6,12 @@
     <assembly fullname="osu.Framework.iOS">
         <type fullname="*" />
     </assembly>
+    <assembly fullname="osu.Framework.Microphone">
+        <type fullname="*" />
+    </assembly>
+    <assembly fullname="osu.Framework.Microphone.iOS">
+        <type fullname="*" />
+    </assembly>
     <assembly fullname="osu.Framework.Microphone.Tests">
         <type fullname="*" />
     </assembly>
