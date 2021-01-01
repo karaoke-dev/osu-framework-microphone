@@ -11,7 +11,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.10</Version>
+    <Version>1.1.0</Version>
     <Description>Unofficial osu!framework extension for using microphon as input device.</Description>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>osu-framework microphone andy840119</PackageTags>
