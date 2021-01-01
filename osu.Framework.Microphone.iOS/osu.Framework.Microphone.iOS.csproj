@@ -1,0 +1,46 @@
+<Project Sdk="MSBuild.Sdk.Extras">
+  <PropertyGroup Label="Project">
+    <TargetFramework>xamarinios10</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>osu.Framework.Microphone.iOS</AssemblyName>
+    <RootNamespace>osu.Framework.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <Description>Unofficial osu!framework extension for using microphon as input device.</Description>
+  </PropertyGroup>
+  <PropertyGroup Label="Nuget">
+    <GenerateProgramFile>false</GenerateProgramFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Version>1.0.10</Version>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>osu-framework microphone andy840119</PackageTags>
+    <Authors>andy840119</Authors>
+    <Company>osu!Karaoke</Company>
+    <Product>osu!Karaoke</Product>
+    <PackageReleaseNotes>喵</PackageReleaseNotes>
+    <PackageId>osu.Framework.Microphone.iOS</PackageId>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\osu.Framework.Microphone\osu.Framework.Microphone.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ppy.osu.Framework.iOS" Version="2020.722.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeLibs Include="$(MSBuildThisFileDirectory)\*.a" />
+    <None Include="@(NativeLibs)">
+      <Pack>true</Pack>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

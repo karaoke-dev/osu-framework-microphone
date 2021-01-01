@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Framework.Microphone.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Framework.Microphone.Tests.Android", "osu.Framework.Microphone.Tests.Android\osu.Framework.Microphone.Tests.Android.csproj", "{320089C6-A141-4D3E-BD5F-C4A6CE9E567B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Framework.Microphone.iOS", "osu.Framework.Microphone.iOS\osu.Framework.Microphone.iOS.csproj", "{431614F4-D662-4CBD-B6C2-3E0D79CA968B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,18 @@ Global
 		{320089C6-A141-4D3E-BD5F-C4A6CE9E567B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{320089C6-A141-4D3E-BD5F-C4A6CE9E567B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{320089C6-A141-4D3E-BD5F-C4A6CE9E567B}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Release|iPhone.Build.0 = Release|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

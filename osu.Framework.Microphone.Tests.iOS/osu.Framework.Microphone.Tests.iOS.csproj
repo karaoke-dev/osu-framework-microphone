@@ -40,6 +40,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\osu.Framework.Microphone.iOS\osu.Framework.Microphone.iOS.csproj">
+      <Project>{431614f4-d662-4cbd-b6c2-3e0d79ca968b}</Project>
+      <Name>osu.Framework.Microphone.iOS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\osu.Framework.Microphone\osu.Framework.Microphone.csproj">
       <Project>{D0F85C61-800A-4645-8633-AC59208FA732}</Project>
       <Name>osu.Framework.Microphone</Name>
