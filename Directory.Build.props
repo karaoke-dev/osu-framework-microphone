@@ -19,9 +19,9 @@
     </None>
   </ItemGroup>
   <ItemGroup Label="Code Analysis">
-    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.1" PrivateAssets="All" />
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)CodeAnalysis\BannedSymbols.txt" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
   </ItemGroup>
   <PropertyGroup Label="Code Analysis">
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)CodeAnalysis\osu-framework-microphone.ruleset</CodeAnalysisRuleSet>
@@ -32,10 +32,10 @@
     <Copyright>Copyright (c) 2020 andy840119</Copyright>
     <Product>osu!framework microphone extension</Product>
     <PackageReleaseNotes>Automated release.</PackageReleaseNotes>
-    <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/osu-Karaoke/osu-framework-microphone</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/osu-Karaoke/osu-framework-microphone</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/karaoke-dev/osu-framework-microphone</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/karaoke-dev/osu-framework-microphone</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Label="Sourcelink3">
     <EnableSourceLink Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildRuntimeType)' != 'Core' ">false</EnableSourceLink>
