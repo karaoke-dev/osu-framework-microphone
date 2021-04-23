@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup Label="Project">
     <OutputType>Library</OutputType>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -11,20 +10,20 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Description>Unofficial osu!framework extension for using microphon as input device.</Description>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>osu-framework microphone andy840119</PackageTags>
     <Authors>andy840119</Authors>
-    <Company>osu!Karaoke</Company>
-    <Product>osu!Karaoke</Product>
+    <Company>karaoke --dev</Company>
+    <Product>karaoke --dev</Product>
     <PackageReleaseNotes>喵</PackageReleaseNotes>
     <PackageId>osu.Framework.Microphone</PackageId>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup Label="Package References">
     <PackageReference Include="NWaves" Version="0.9.4" />
-    <PackageReference Include="ppy.osu.Framework" Version="2020.1229.0" />
+    <PackageReference Include="ppy.osu.Framework" Version="2021.410.0" />
   </ItemGroup>
 
 </Project>
