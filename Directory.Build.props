@@ -29,7 +29,7 @@
   <PropertyGroup Label="NuGet">
     <Authors>andy840119</Authors>
     <Company>andy840119</Company>
-    <Copyright>Copyright (c) 2020 andy840119</Copyright>
+    <Copyright>Copyright (c) 2020 karaoke --dev</Copyright>
     <Product>osu!framework microphone extension</Product>
     <PackageReleaseNotes>Automated release.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
