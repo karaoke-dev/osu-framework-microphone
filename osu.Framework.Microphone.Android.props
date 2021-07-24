@@ -11,8 +11,7 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidApplication>True</AndroidApplication>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-    <!-- This does not take effect, unlike osu game repo.  -->
-    <!--<TargetFrameworkVersion>v10.0</TargetFrameworkVersion>-->
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a</AndroidSupportedAbis>
@@ -23,7 +22,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>False</Optimize>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AndroidManagedSymbols>false</AndroidManagedSymbols>
@@ -32,20 +31,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DebugSymbols>false</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
     <AndroidManagedSymbols>false</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
-  <ItemGroup>
-    <AndroidNativeLibrary Include="..\osu.Framework.Android\armeabi-v7a\*.so">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\osu.Framework.Android\arm64-v8a\*.so">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidNativeLibrary>
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
@@ -54,8 +45,12 @@
     <Reference Include="Mono.Android" />
     <Reference Include="Java.Interop" />
   </ItemGroup>
-  <ItemGroup Label="Package References">
-    <PackageReference Include="ManagedBass" Version="2.0.4" />
-    <PackageReference Include="ManagedBass.Fx" Version="2.0.1" />
+  <ItemGroup>
+    <PackageReference Include="ppy.osu.Game.Resources" Version="2021.706.0" />
+    <PackageReference Include="ppy.osu.Framework.Android" Version="2021.707.0" />
+  </ItemGroup>
+  <ItemGroup Label="Transitive Dependencies">
+    <!-- Realm needs to be directly referenced in all Xamarin projects, as it will not pull in its transitive dependencies otherwise. -->
+    <PackageReference Include="Realm" Version="10.2.1" />
   </ItemGroup>
 </Project>

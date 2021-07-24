@@ -32,7 +32,7 @@ namespace osu.Framework.Tests.Visual.Input
             };
         }
 
-        public class MicrophonePitchVisualization : MicrophoneVisualization
+        private class MicrophonePitchVisualization : MicrophoneVisualization
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
@@ -57,7 +57,7 @@ namespace osu.Framework.Tests.Visual.Input
             }
         }
 
-        public class MicrophoneLoudnessVisualization : MicrophoneVisualization
+        private class MicrophoneLoudnessVisualization : MicrophoneVisualization
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
@@ -82,7 +82,7 @@ namespace osu.Framework.Tests.Visual.Input
             }
         }
 
-        public class MicrophoneVisualization : CompositeDrawable
+        private class MicrophoneVisualization : CompositeDrawable
         {
             private readonly Box background;
 
