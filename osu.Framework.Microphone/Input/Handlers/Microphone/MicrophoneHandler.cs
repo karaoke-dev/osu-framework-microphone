@@ -37,6 +37,9 @@ namespace osu.Framework.Input.Handlers.Microphone
                     // Open microphone device if available
                     Bass.RecordInit(deviceIndex);
 
+                    if(!isCurrentDeviceValid())
+                        return;
+
                     recordInfo = Bass.RecordingInfo;
                     var frequency = recordInfo.Frequency;
                     var channel = recordInfo.Channels;
@@ -58,6 +61,14 @@ namespace osu.Framework.Input.Handlers.Microphone
             }, true);
 
             return true;
+
+            static bool isCurrentDeviceValid()
+            {
+                var index = Bass.CurrentRecordingDevice;
+                var device = index == Bass.DefaultDevice ? default : Bass.RecordGetDeviceInfo(index);
+
+                return device.IsEnabled && device.IsInitialized;
+            }
         }
 
         private float[] unprocessedBuffer = Array.Empty<float>();

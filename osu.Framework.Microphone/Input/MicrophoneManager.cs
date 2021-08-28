@@ -36,14 +36,6 @@ namespace osu.Framework.Input
                 yield return Bass.RecordGetDeviceInfo(i);
         }
 
-        protected virtual bool IsCurrentDeviceValid()
-        {
-            var deviceIndex = Bass.CurrentRecordingDevice;
-            var device = deviceIndex == Bass.DefaultDevice ? default : Bass.RecordGetDeviceInfo(deviceIndex);
-
-            return device.IsEnabled && device.IsInitialized;
-        }
-
         public override string ToString() => $@"{GetType().ReadableName()}";
     }
 }
