@@ -22,8 +22,8 @@
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup Label="Package References">
-    <PackageReference Include="NWaves" Version="0.9.4" />
-    <PackageReference Include="ppy.osu.Framework" Version="2021.723.0" />
+    <PackageReference Include="NWaves" Version="0.9.5" />
+    <PackageReference Include="ppy.osu.Framework" Version="2021.819.0" />
   </ItemGroup>
 
 </Project>
