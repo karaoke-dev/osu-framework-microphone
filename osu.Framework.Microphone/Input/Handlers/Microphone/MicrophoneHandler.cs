@@ -13,14 +13,14 @@ using System.Runtime.InteropServices;
 
 namespace osu.Framework.Input.Handlers.Microphone
 {
-    public class OsuTKMicrophoneHandler : InputHandler
+    public class MicrophoneHandler : InputHandler
     {
         public override bool IsActive => Bass.RecordingDeviceCount > 0;
 
         private readonly int deviceIndex;
         private int stream;
 
-        public OsuTKMicrophoneHandler(int device)
+        public MicrophoneHandler(int device)
         {
             deviceIndex = device;
         }
@@ -65,7 +65,7 @@ namespace osu.Framework.Input.Handlers.Microphone
             var pitch = Pitch.FromYin(this.buffer, 44100, low: 40, high: 1000);
 
             // Process loudness
-            var spectrum = new Fft(512).PowerSpectrum(new DiscreteSignal(44100, this.buffer)).Samples;
+            var spectrum = new Fft().PowerSpectrum(new DiscreteSignal(44100, this.buffer)).Samples;
             var loudness = Perceptual.Loudness(spectrum);
 
             // Send new event
