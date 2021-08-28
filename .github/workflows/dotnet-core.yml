@@ -15,8 +15,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore osu.Framework.Microphone.Tests
     - name: Build with .NET
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build osu.Framework.Microphone.Tests --no-restore --configuration Release
     - name: Unit Tests
-      run: dotnet test --no-build --no-restore --configuration Release
+      run: dotnet test osu.Framework.Microphone.Tests --no-build --no-restore --configuration Release
