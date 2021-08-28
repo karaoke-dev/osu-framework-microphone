@@ -25,6 +25,8 @@ namespace osu.Framework.Input.Handlers.Microphone
             deviceIndex = device;
         }
 
+        private RecordInfo recordInfo;
+
         public override bool Initialize(GameHost host)
         {
             Enabled.BindValueChanged(e =>
@@ -33,7 +35,13 @@ namespace osu.Framework.Input.Handlers.Microphone
                 {
                     // Open microphone device if available
                     Bass.RecordInit(deviceIndex);
-                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 10, procedure);
+
+                    recordInfo = Bass.RecordingInfo;
+                    var frequency = recordInfo.Frequency;
+                    var channel = recordInfo.Channels;
+                    var period = 10;
+
+                    stream = Bass.RecordStart(frequency, channel, BassFlags.RecordPause | BassFlags.Float, period, procedure);
 
                     // Start channel
                     Bass.ChannelPlay(stream);
@@ -62,10 +70,10 @@ namespace osu.Framework.Input.Handlers.Microphone
             Marshal.Copy(buffer, this.buffer, 0, length / 4);
 
             // Process pitch
-            var pitch = Pitch.FromYin(this.buffer, 44100, low: 40, high: 1000);
+            var pitch = Pitch.FromYin(this.buffer, recordInfo.Frequency, low: 40, high: 1000);
 
             // Process loudness
-            var spectrum = new Fft().PowerSpectrum(new DiscreteSignal(44100, this.buffer)).Samples;
+            var spectrum = new Fft().PowerSpectrum(new DiscreteSignal(recordInfo.Frequency, this.buffer)).Samples;
             var loudness = Perceptual.Loudness(spectrum);
 
             // Send new event
