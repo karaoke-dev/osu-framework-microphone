@@ -9,21 +9,24 @@ using osu.Framework.Input.StateChanges;
 using osu.Framework.Input.States;
 using osu.Framework.Platform;
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace osu.Framework.Input.Handlers.Microphone
 {
-    public class OsuTKMicrophoneHandler : InputHandler
+    public class MicrophoneHandler : InputHandler
     {
         public override bool IsActive => Bass.RecordingDeviceCount > 0;
 
         private readonly int deviceIndex;
         private int stream;
 
-        public OsuTKMicrophoneHandler(int device)
+        public MicrophoneHandler(int device)
         {
             deviceIndex = device;
         }
+
+        private RecordInfo recordInfo;
 
         public override bool Initialize(GameHost host)
         {
@@ -33,7 +36,16 @@ namespace osu.Framework.Input.Handlers.Microphone
                 {
                     // Open microphone device if available
                     Bass.RecordInit(deviceIndex);
-                    stream = Bass.RecordStart(44100, 2, BassFlags.RecordPause | BassFlags.Float, 10, procedure);
+
+                    if(!isCurrentDeviceValid())
+                        return;
+
+                    recordInfo = Bass.RecordingInfo;
+                    var frequency = recordInfo.Frequency;
+                    var channel = recordInfo.Channels;
+                    var period = 10 * channel;
+
+                    stream = Bass.RecordStart(frequency, channel, BassFlags.RecordPause | BassFlags.Float, period, procedure);
 
                     // Start channel
                     Bass.ChannelPlay(stream);
@@ -49,27 +61,46 @@ namespace osu.Framework.Input.Handlers.Microphone
             }, true);
 
             return true;
+
+            static bool isCurrentDeviceValid()
+            {
+                var index = Bass.CurrentRecordingDevice;
+                var device = index == Bass.DefaultDevice ? default : Bass.RecordGetDeviceInfo(index);
+
+                return device.IsEnabled && device.IsInitialized;
+            }
         }
 
-        private float[] buffer;
+        private float[] unprocessedBuffer = Array.Empty<float>();
 
         private bool procedure(int handle, IntPtr buffer, int length, IntPtr user)
         {
             // Read and save buffer
-            if (this.buffer == null || this.buffer.Length < length / 4)
-                this.buffer = new float[length / 4];
+            var size = length / 4;
+            var localBuffer = new float[size];
 
-            Marshal.Copy(buffer, this.buffer, 0, length / 4);
+            Marshal.Copy(buffer, localBuffer, 0, size);
+
+            unprocessedBuffer = unprocessedBuffer.Concat(localBuffer).ToArray();
+
+            // note : will cause error if buffer is less than 48000 / 40 * 2 = 2400
+            // so not need to process buffer if less then 2400
+            if (unprocessedBuffer.Length < 2400)
+                return true;
 
             // Process pitch
-            var pitch = Pitch.FromYin(this.buffer, 44100, low: 40, high: 1000);
+            var pitch = Pitch.FromYin(unprocessedBuffer, recordInfo.Frequency, low: 40, high: 1000);
 
             // Process loudness
-            var spectrum = new Fft(512).PowerSpectrum(new DiscreteSignal(44100, this.buffer)).Samples;
+            var spectrum = new Fft().PowerSpectrum(new DiscreteSignal(recordInfo.Frequency, unprocessedBuffer)).Samples;
             var loudness = Perceptual.Loudness(spectrum);
 
             // Send new event
             onPitchDetected(new MicrophoneState { Pitch = pitch, Loudness = loudness });
+
+            // clear the array.
+            unprocessedBuffer =  Array.Empty<float>();
+
             return true;
         }
 
