@@ -35,18 +35,18 @@ namespace osu.Framework.Input
         {
             switch (inputStateChange)
             {
-                case MicrophoneSoundChangeEvent microphoneSoundChange:
-                    HandleMicrophoneStateChange(microphoneSoundChange);
+                case MicrophoneVoiceChangeEvent microphoneVoiceChange:
+                    HandleMicrophoneStateChange(microphoneVoiceChange);
                     break;
             }
 
             base.HandleInputStateChange(inputStateChange);
         }
 
-        protected virtual void HandleMicrophoneStateChange(MicrophoneSoundChangeEvent microphoneSoundChange)
+        protected virtual void HandleMicrophoneStateChange(MicrophoneVoiceChangeEvent microphoneVoiceChange)
         {
-            var inputState = microphoneSoundChange.State as IMicrophoneInputState;
-            var lastState = microphoneSoundChange.LastState;
+            var inputState = microphoneVoiceChange.State as IMicrophoneInputState;
+            var lastState = microphoneVoiceChange.LastState;
             var state = inputState.Microphone;
 
             if (!lastState.HasSound && state.HasSound)

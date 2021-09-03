@@ -6,11 +6,11 @@ using System;
 
 namespace osu.Framework.Input.StateChanges.Events
 {
-    public class MicrophoneSoundChangeEvent : InputStateChangeEvent
+    public class MicrophoneVoiceChangeEvent : InputStateChangeEvent
     {
         public readonly MicrophoneState LastState;
 
-        public MicrophoneSoundChangeEvent(InputState state, IInput input, MicrophoneState lastState)
+        public MicrophoneVoiceChangeEvent(InputState state, IInput input, MicrophoneState lastState)
             : base(state, input)
         {
             if (!(state is IMicrophoneInputState))

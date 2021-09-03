@@ -24,7 +24,7 @@ namespace osu.Framework.Input.StateChanges
             microphoneInputState.Microphone.Loudness = State.Loudness;
 
             // Trigger change
-            handler.HandleInputStateChange(new MicrophoneSoundChangeEvent(state, this, lastState));
+            handler.HandleInputStateChange(new MicrophoneVoiceChangeEvent(state, this, lastState));
         }
     }
 }
