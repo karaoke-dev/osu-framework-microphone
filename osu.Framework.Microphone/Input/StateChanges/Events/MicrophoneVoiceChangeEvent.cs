@@ -8,15 +8,12 @@ namespace osu.Framework.Input.StateChanges.Events
 {
     public class MicrophoneVoiceChangeEvent : InputStateChangeEvent
     {
-        public readonly MicrophoneState LastState;
+        public readonly Voice LastVoice;
 
-        public MicrophoneVoiceChangeEvent(InputState state, IInput input, MicrophoneState lastState)
+        public MicrophoneVoiceChangeEvent(InputState state, IInput input, Voice lastVoice)
             : base(state, input)
         {
-            if (!(state is IMicrophoneInputState))
-                throw new NotMicrophoneInputStateException();
-
-            LastState = lastState;
+            LastVoice = lastVoice;
         }
     }
 }
