@@ -30,19 +30,17 @@ namespace osu.Framework.Input
         }
 
         /// <summary>
-        /// Indicates whether the two pitch result are the same.
+        /// Indicates whether the <see cref="Pitch"/> of this voice is equal to <see cref="Pitch"/> of the other voice.
+        /// Notice that we didn't care about loudness because it's almost not possible be same even with no noise.
         /// </summary>
-        /// <param name="other">The other touch.</param>
-        public bool Equals(Voice other) => Precision.AlmostEquals(Pitch, other.Pitch) && Precision.AlmostEquals(Loudness, other.Loudness);
+        /// <param name="other">The other voice.</param>
+        public bool Equals(Voice other) => Precision.AlmostEquals(Pitch, other.Pitch);
 
         public static bool operator ==(Voice left, Voice right) => left.Equals(right);
         public static bool operator !=(Voice left, Voice right) => !(left == right);
 
         public override bool Equals(object obj) => obj is Voice other && Equals(other);
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Pitch, Loudness);
-        }
+        public override int GetHashCode() => Pitch.GetHashCode();
     }
 }
