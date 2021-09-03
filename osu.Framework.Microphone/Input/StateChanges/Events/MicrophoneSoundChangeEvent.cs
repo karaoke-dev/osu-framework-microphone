@@ -14,7 +14,7 @@ namespace osu.Framework.Input.StateChanges.Events
             : base(state, input)
         {
             if (!(state is IMicrophoneInputState))
-                throw new ArgumentException($"{nameof(state)} should be the type of {nameof(IMicrophoneInputState)}");
+                throw new NotMicrophoneInputStateException();
 
             LastState = lastState;
         }

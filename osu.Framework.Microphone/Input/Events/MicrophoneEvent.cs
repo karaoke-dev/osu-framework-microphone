@@ -14,7 +14,7 @@ namespace osu.Framework.Input.Events
             : base(state as InputState)
         {
             if (state == null)
-                throw new ArgumentException($"{nameof(state)} should be the type of {nameof(IMicrophoneInputState)}");
+                throw new NotMicrophoneInputStateException();
         }
     }
 }
