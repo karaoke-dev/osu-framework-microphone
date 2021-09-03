@@ -11,10 +11,8 @@ namespace osu.Framework.Input.Events
         public new IMicrophoneInputState CurrentState => (IMicrophoneInputState)base.CurrentState;
 
         protected MicrophoneEvent(IMicrophoneInputState state)
-            : base(state as InputState)
+            : base(state as InputState ?? throw new NotMicrophoneInputStateException())
         {
-            if (state == null)
-                throw new NotMicrophoneInputStateException();
         }
     }
 }
