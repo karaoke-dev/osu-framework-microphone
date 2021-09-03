@@ -9,22 +9,20 @@ namespace osu.Framework.Input.StateChanges
 {
     public class MicrophoneInput : IInput
     {
-        public MicrophoneState State;
+        public Voice Voice;
 
         public void Apply(InputState state, IInputStateChangeHandler handler)
         {
             if (!(state is IMicrophoneInputState microphoneInputState))
-                throw new ArgumentException($"{nameof(state)} should be the type of {nameof(IMicrophoneInputState)}");
+                throw new NotMicrophoneInputStateException();
 
-            // Become last state
-            var lastState = microphoneInputState.Microphone.Clone() as MicrophoneState;
+            var microphone = microphoneInputState.Microphone;
+            if(microphone.Voice == Voice)
+                return;
 
-            // Update latest state into input state
-            microphoneInputState.Microphone.Pitch = State.Pitch;
-            microphoneInputState.Microphone.Loudness = State.Loudness;
-
-            // Trigger change
-            handler.HandleInputStateChange(new MicrophoneSoundChangeEvent(state, this, lastState));
+            var lastVoice = microphone.Voice;
+            microphone.Voice = Voice;
+            handler.HandleInputStateChange(new MicrophoneVoiceChangeEvent(state, this, lastVoice));
         }
     }
 }

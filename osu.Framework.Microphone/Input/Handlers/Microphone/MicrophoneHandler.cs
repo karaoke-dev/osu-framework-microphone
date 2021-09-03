@@ -73,6 +73,8 @@ namespace osu.Framework.Input.Handlers.Microphone
 
         private float[] unprocessedBuffer = Array.Empty<float>();
 
+        private Voice lastVoice;
+
         private bool procedure(int handle, IntPtr buffer, int length, IntPtr user)
         {
             // Read and save buffer
@@ -96,7 +98,12 @@ namespace osu.Framework.Input.Handlers.Microphone
             var loudness = Perceptual.Loudness(spectrum);
 
             // Send new event
-            onPitchDetected(new MicrophoneState { Pitch = pitch, Loudness = loudness });
+            var voice = new Voice(pitch, loudness);
+            if (voice != lastVoice)
+            {
+                dispatchEvent(voice);
+                lastVoice = voice;
+            }
 
             // clear the array.
             unprocessedBuffer =  Array.Empty<float>();
@@ -104,21 +111,12 @@ namespace osu.Framework.Input.Handlers.Microphone
             return true;
         }
 
-        private MicrophoneState lastState = new MicrophoneState();
-
-        private void onPitchDetected(MicrophoneState state)
+        private void dispatchEvent(Voice voice)
         {
-            // do not continuous sending no sound event
-            if (!state.HasSound && lastState.HasSound == state.HasSound)
-                return;
-
-            // Throw into pending input
             PendingInputs.Enqueue(new MicrophoneInput
             {
-                State = state
+                Voice = voice
             });
-
-            lastState = state;
         }
     }
 }

@@ -11,12 +11,13 @@ namespace osu.Framework.Input.States
         public MicrophoneState Microphone { get; }
 
         /// <summary>
-        /// Creates a new <see cref="InputState"/> using the individual input states from another <see cref="InputState"/>.
+        /// Creates a new <see cref="MicrophoneInputState"/> using the individual input states from another <see cref="MicrophoneInputState"/>.
         /// </summary>
-        /// <param name="other">The <see cref="InputState"/> to take the individual input states from. Note that states are not cloned and will remain as references to the same objects.</param>
+        /// <param name="other">The <see cref="MicrophoneInputState"/> to take the individual input states from. Note that states are not cloned and will remain as references to the same objects.</param>
         public MicrophoneInputState(MicrophoneInputState other)
-            : this(other.Microphone)
+            : base(other)
         {
+            Microphone = other.Microphone ?? new MicrophoneState();
         }
 
         /// <summary>

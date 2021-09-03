@@ -38,21 +38,21 @@ namespace osu.Framework.Tests.Visual.Input
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
-                var pitch = e.CurrentState.Microphone.Pitch;
+                var pitch = e.CurrentState.Microphone.Voice.Pitch;
                 BoxText.Text = "Pitch start : " + pitch;
                 return base.OnMicrophoneStartSinging(e);
             }
 
             protected override bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
             {
-                var pitch = e.CurrentState.Microphone.Pitch;
+                var pitch = e.CurrentState.Microphone.Voice.Pitch;
                 BoxText.Text = "Pitch end : " + pitch;
                 return base.OnMicrophoneEndSinging(e);
             }
 
             protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
-                var pitch = e.CurrentState.Microphone.Pitch;
+                var pitch = e.CurrentState.Microphone.Voice.Pitch;
                 Y = -(pitch - 50);
                 BoxText.Text = "Pitching : " + pitch;
                 return base.OnMicrophoneSinging(e);
@@ -63,21 +63,21 @@ namespace osu.Framework.Tests.Visual.Input
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
-                var loudness = e.CurrentState.Microphone.Loudness;
+                var loudness = e.CurrentState.Microphone.Voice.Loudness;
                 BoxText.Text = "Loudness start : " + loudness;
                 return base.OnMicrophoneStartSinging(e);
             }
 
             protected override bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
             {
-                var loudness = e.CurrentState.Microphone.Loudness;
+                var loudness = e.CurrentState.Microphone.Voice.Loudness;
                 BoxText.Text = "Loudness end : " + loudness;
                 return base.OnMicrophoneEndSinging(e);
             }
 
             protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
-                var loudness = e.CurrentState.Microphone.Loudness;
+                var loudness = e.CurrentState.Microphone.Voice.Loudness;
                 Y = -(loudness - 50) * 5;
                 BoxText.Text = "Loudness : " + loudness;
                 return base.OnMicrophoneSinging(e);
@@ -109,23 +109,14 @@ namespace osu.Framework.Tests.Visual.Input
                 };
             }
 
-            protected override bool Handle(UIEvent e)
-            {
-                switch (e)
+            protected override bool Handle(UIEvent e) =>
+                e switch
                 {
-                    case MicrophoneStartPitchingEvent microphoneStartPitching:
-                        return OnMicrophoneStartSinging(microphoneStartPitching);
-
-                    case MicrophoneEndPitchingEvent microphoneEndPitching:
-                        return OnMicrophoneEndSinging(microphoneEndPitching);
-
-                    case MicrophonePitchingEvent microphonePitching:
-                        return OnMicrophoneSinging(microphonePitching);
-
-                    default:
-                        return base.Handle(e);
-                }
-            }
+                    MicrophoneStartPitchingEvent microphoneStartPitching => OnMicrophoneStartSinging(microphoneStartPitching),
+                    MicrophoneEndPitchingEvent microphoneEndPitching => OnMicrophoneEndSinging(microphoneEndPitching),
+                    MicrophonePitchingEvent microphonePitching => OnMicrophoneSinging(microphonePitching),
+                    _ => base.Handle(e)
+                };
 
             protected virtual bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
