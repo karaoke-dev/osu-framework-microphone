@@ -109,23 +109,14 @@ namespace osu.Framework.Tests.Visual.Input
                 };
             }
 
-            protected override bool Handle(UIEvent e)
-            {
-                switch (e)
+            protected override bool Handle(UIEvent e) =>
+                e switch
                 {
-                    case MicrophoneStartPitchingEvent microphoneStartPitching:
-                        return OnMicrophoneStartSinging(microphoneStartPitching);
-
-                    case MicrophoneEndPitchingEvent microphoneEndPitching:
-                        return OnMicrophoneEndSinging(microphoneEndPitching);
-
-                    case MicrophonePitchingEvent microphonePitching:
-                        return OnMicrophoneSinging(microphonePitching);
-
-                    default:
-                        return base.Handle(e);
-                }
-            }
+                    MicrophoneStartPitchingEvent microphoneStartPitching => OnMicrophoneStartSinging(microphoneStartPitching),
+                    MicrophoneEndPitchingEvent microphoneEndPitching => OnMicrophoneEndSinging(microphoneEndPitching),
+                    MicrophonePitchingEvent microphonePitching => OnMicrophoneSinging(microphonePitching),
+                    _ => base.Handle(e)
+                };
 
             protected virtual bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
