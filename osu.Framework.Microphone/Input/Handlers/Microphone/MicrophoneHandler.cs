@@ -9,12 +9,23 @@ using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using NWaves.Utils;
+using osu.Framework.Bindables;
 
 namespace osu.Framework.Input.Handlers.Microphone
 {
     public class MicrophoneHandler : InputHandler
     {
         public override bool IsActive => Bass.RecordingDeviceCount > 0;
+
+        /// <summary>
+        /// Do not calculate pitch value if decibel is less then <see cref="Sensitivity"/>
+        /// </summary>
+        public BindableFloat Sensitivity { get; } = new BindableFloat(10)
+        {
+            MinValue = 0,
+            MaxValue = 100,
+            Precision = 1,
+        };
 
         private readonly int deviceIndex;
         private int stream;
@@ -69,6 +80,12 @@ namespace osu.Framework.Input.Handlers.Microphone
             }
         }
 
+        public override void Reset()
+        {
+            Sensitivity.SetDefault();
+            base.Reset();
+        }
+
         private float[] unprocessedBuffer = Array.Empty<float>();
 
         private Voice lastVoice;
@@ -88,12 +105,11 @@ namespace osu.Framework.Input.Handlers.Microphone
             if (unprocessedBuffer.Length < 2400)
                 return true;
 
-            // create voice record.
+            // send no voice event if voice is too small.
             var decibel = calculateDecibel(unprocessedBuffer);
-            var pitch = calculatePitch(unprocessedBuffer, recordInfo.Frequency);
-            var voice = new Voice(pitch, decibel);
+            var pitch = decibel < Sensitivity.Value ? 0 : calculatePitch(unprocessedBuffer, recordInfo.Frequency);
 
-            // Send new event
+            var voice = new Voice(pitch, decibel);
             if (voice != lastVoice)
             {
                 dispatchEvent(voice);
