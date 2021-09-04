@@ -1,6 +1,7 @@
 ﻿// Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -8,6 +9,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input;
 using osu.Framework.Input.Events;
+using osu.Framework.Input.Handlers.Microphone;
 using osuTK.Graphics;
 
 namespace osu.Framework.Tests.Visual.Input
@@ -17,7 +19,7 @@ namespace osu.Framework.Tests.Visual.Input
     {
         public TestSceneMicrophone()
         {
-            Child = new MicrophoneInputManager
+            var manager = new TestMicrophoneInputManager
             {
                 RelativeSizeAxes = Axes.Both,
                 Children = new Drawable[]
@@ -32,6 +34,18 @@ namespace osu.Framework.Tests.Visual.Input
                     }
                 }
             };
+            AddSliderStep("sensitive", 0f, 100, 10, blur =>
+            {
+                var sensitive = manager.MicrophoneHandler.Sensitivity;
+                sensitive.Value = blur;
+            });
+
+            Child = manager;
+        }
+
+        private class TestMicrophoneInputManager : MicrophoneInputManager
+        {
+            public MicrophoneHandler MicrophoneHandler => InputHandlers.OfType<MicrophoneHandler>().FirstOrDefault();
         }
 
         private class MicrophonePitchVisualization : MicrophoneVisualization
