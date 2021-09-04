@@ -12,6 +12,6 @@ namespace osu.Framework.Input.States
         /// </summary>
         public Voice Voice { get; set; }
 
-        public override string ToString() => $@"Pitch: {Voice.Pitch}, Loudness: {Voice.Loudness}";
+        public override string ToString() => $@"Pitch: {Voice.Pitch}, Decibel: {Voice.Decibel}";
     }
 }

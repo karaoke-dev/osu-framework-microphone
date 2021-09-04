@@ -26,7 +26,7 @@ namespace osu.Framework.Tests.Visual.Input
                     {
                         X = 50
                     },
-                    new MicrophoneLoudnessVisualization
+                    new MicrophoneDecibelVisualization
                     {
                         X = 200,
                     }
@@ -59,27 +59,27 @@ namespace osu.Framework.Tests.Visual.Input
             }
         }
 
-        private class MicrophoneLoudnessVisualization : MicrophoneVisualization
+        private class MicrophoneDecibelVisualization : MicrophoneVisualization
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
-                var loudness = e.CurrentState.Microphone.Voice.Loudness;
-                BoxText.Text = "Loudness start : " + loudness;
+                var decibel = e.CurrentState.Microphone.Voice.Decibel;
+                BoxText.Text = "Decibel start : " + decibel;
                 return base.OnMicrophoneStartSinging(e);
             }
 
             protected override bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
             {
-                var loudness = e.CurrentState.Microphone.Voice.Loudness;
-                BoxText.Text = "Loudness end : " + loudness;
+                var decibel = e.CurrentState.Microphone.Voice.Decibel;
+                BoxText.Text = "Decibel end : " + decibel;
                 return base.OnMicrophoneEndSinging(e);
             }
 
             protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
-                var loudness = e.CurrentState.Microphone.Voice.Loudness;
-                Y = -(loudness - 50) * 5;
-                BoxText.Text = "Loudness : " + loudness;
+                var decibel = e.CurrentState.Microphone.Voice.Decibel;
+                Y = -(decibel - 50) * 5;
+                BoxText.Text = "Decibel : " + decibel;
                 return base.OnMicrophoneSinging(e);
             }
         }
