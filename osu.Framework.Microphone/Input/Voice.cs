@@ -14,24 +14,24 @@ namespace osu.Framework.Input
         public readonly float Pitch;
 
         /// <summary>
-        /// Detected loudness
+        /// Detected decibel
         /// </summary>
-        public readonly float Loudness;
+        public readonly float Decibel;
 
         /// <summary>
         /// Detected voice or not
         /// </summary>
         public bool HasVoice => Pitch != 0;
 
-        public Voice(float pitch, float loudness)
+        public Voice(float pitch, float decibel)
         {
             Pitch = pitch;
-            Loudness = loudness;
+            Decibel = decibel;
         }
 
         /// <summary>
         /// Indicates whether the <see cref="Pitch"/> of this voice is equal to <see cref="Pitch"/> of the other voice.
-        /// Notice that we didn't care about loudness because it's almost not possible be same even with no noise.
+        /// Notice that we didn't care about decibel because it's almost not possible be same even with no noise.
         /// </summary>
         /// <param name="other">The other voice.</param>
         public bool Equals(Voice other) => Precision.AlmostEquals(Pitch, other.Pitch);

@@ -3,14 +3,12 @@
 
 using ManagedBass;
 using NWaves.Features;
-using NWaves.Signals;
-using NWaves.Transforms;
 using osu.Framework.Input.StateChanges;
-using osu.Framework.Input.States;
 using osu.Framework.Platform;
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
+using NWaves.Utils;
 
 namespace osu.Framework.Input.Handlers.Microphone
 {
@@ -90,15 +88,12 @@ namespace osu.Framework.Input.Handlers.Microphone
             if (unprocessedBuffer.Length < 2400)
                 return true;
 
-            // Process pitch
-            var pitch = Pitch.FromYin(unprocessedBuffer, recordInfo.Frequency, low: 40, high: 1000);
-
-            // Process loudness
-            var spectrum = new Fft().PowerSpectrum(new DiscreteSignal(recordInfo.Frequency, unprocessedBuffer)).Samples;
-            var loudness = Perceptual.Loudness(spectrum);
+            // create voice record.
+            var decibel = calculateDecibel(unprocessedBuffer);
+            var pitch = calculatePitch(unprocessedBuffer, recordInfo.Frequency);
+            var voice = new Voice(pitch, decibel);
 
             // Send new event
-            var voice = new Voice(pitch, loudness);
             if (voice != lastVoice)
             {
                 dispatchEvent(voice);
@@ -109,6 +104,23 @@ namespace osu.Framework.Input.Handlers.Microphone
             unprocessedBuffer =  Array.Empty<float>();
 
             return true;
+
+            static float calculateDecibel(float[] unprocessedBuffer)
+            {
+                // change to this way: https://stackoverflow.com/a/4152702/4105113
+                // not really sure if it's right but at least result is better.
+                double sum = 0;
+                foreach (double sample in unprocessedBuffer)
+                {
+                    sum += (sample * sample);
+                }
+                double rms = Math.Sqrt(sum / unprocessedBuffer.Length);
+                var decibel =  (float)Scale.ToDecibel(rms);
+                return decibel + 50; // magic number.
+            }
+
+            static float calculatePitch(float[] unprocessedBuffer, int sampleRate)
+                => Pitch.FromYin(unprocessedBuffer, sampleRate, low: 60, high: 1000);
         }
 
         private void dispatchEvent(Voice voice)
