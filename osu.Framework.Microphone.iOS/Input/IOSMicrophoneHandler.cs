@@ -10,7 +10,8 @@ namespace osu.Framework.iOS.Input
     {
         public override bool IsActive => throw new System.NotImplementedException();
 
-        public IOSMicrophoneHandler() : base(-1)
+        public IOSMicrophoneHandler()
+            : base(-1)
         {
         }
 
@@ -28,9 +29,11 @@ namespace osu.Framework.iOS.Input
                 if (granted)
                 {
                     session.SetCategory(AVAudioSession.CategoryRecord, out NSError error);
+
                     if (error == null)
                     {
                         session.SetActive(true, out error);
+
                         if (error != null)
                         {
                             Logger.Log(error.LocalizedDescription, LoggingTarget.Information, LogLevel.Error);

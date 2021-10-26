@@ -7,6 +7,5 @@ namespace osu.Framework.Input.States
 {
     public class NotMicrophoneInputStateException : InvalidOperationException
     {
-
     }
 }
