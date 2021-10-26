@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "osu-framework-microphone.sln",
+    "projects": [
+      "osu.Framework.Microphone.Android\\osu.Framework.Microphone.Android.csproj",
+      "osu.Framework.Microphone.Tests.Android\\osu.Framework.Microphone.Tests.Android.csproj",
+      "osu.Framework.Microphone\\osu.Framework.Microphone.csproj"
+    ]
+  }
+}

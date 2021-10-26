@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "osu-framework-microphone.sln",
+    "projects": [
+      "osu.Framework.Microphone.iOS\\osu.Framework.Microphone.iOS.csproj",
+      "osu.Framework.Microphone.Tests.iOS\\osu.Framework.Microphone.Tests.iOS.csproj",
+      "osu.Framework.Microphone\\osu.Framework.Microphone.csproj"
+    ]
+  }
+}

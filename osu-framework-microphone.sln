@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Framework.Microphone.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Framework.Microphone.iOS", "osu.Framework.Microphone.iOS\osu.Framework.Microphone.iOS.csproj", "{431614F4-D662-4CBD-B6C2-3E0D79CA968B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Framework.Microphone.Android", "osu.Framework.Microphone.Android\osu.Framework.Microphone.Android.csproj", "{4D112E30-462B-4264-B44D-53B61ABB185E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,8 @@ Global
 		{D972753E-45FC-4B82-B017-34BDE485F1BB}.Release|iPhone.Build.0 = Release|iPhone
 		{D972753E-45FC-4B82-B017-34BDE485F1BB}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{D972753E-45FC-4B82-B017-34BDE485F1BB}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{D972753E-45FC-4B82-B017-34BDE485F1BB}.Debug|Any CPU.Build.0 = Debug|iPhone
+		{D972753E-45FC-4B82-B017-34BDE485F1BB}.Debug|Any CPU.Deploy.0 = Debug|iPhone
 		{320089C6-A141-4D3E-BD5F-C4A6CE9E567B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{320089C6-A141-4D3E-BD5F-C4A6CE9E567B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{320089C6-A141-4D3E-BD5F-C4A6CE9E567B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -99,6 +103,8 @@ Global
 		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Release|iPhone.Build.0 = Release|Any CPU
 		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{431614F4-D662-4CBD-B6C2-3E0D79CA968B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{4D112E30-462B-4264-B44D-53B61ABB185E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D112E30-462B-4264-B44D-53B61ABB185E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

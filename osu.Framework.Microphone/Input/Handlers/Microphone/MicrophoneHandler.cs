@@ -24,7 +24,7 @@ namespace osu.Framework.Input.Handlers.Microphone
         {
             MinValue = 0,
             MaxValue = 100,
-            Precision = 1,
+            Precision = 1
         };
 
         private readonly int deviceIndex;
@@ -46,7 +46,7 @@ namespace osu.Framework.Input.Handlers.Microphone
                     // Open microphone device if available
                     Bass.RecordInit(deviceIndex);
 
-                    if(!isCurrentDeviceValid())
+                    if (!isCurrentDeviceValid())
                         return;
 
                     recordInfo = Bass.RecordingInfo;
@@ -110,6 +110,7 @@ namespace osu.Framework.Input.Handlers.Microphone
             var pitch = decibel < Sensitivity.Value ? 0 : calculatePitch(unprocessedBuffer, recordInfo.Frequency);
 
             var voice = new Voice(pitch, decibel);
+
             if (voice != lastVoice)
             {
                 dispatchEvent(voice);
@@ -117,7 +118,7 @@ namespace osu.Framework.Input.Handlers.Microphone
             }
 
             // clear the array.
-            unprocessedBuffer =  Array.Empty<float>();
+            unprocessedBuffer = Array.Empty<float>();
 
             return true;
 
@@ -127,7 +128,7 @@ namespace osu.Framework.Input.Handlers.Microphone
                 // not really sure if it's right but at least result is better.
                 double sum = unprocessedBuffer.Sum(sample => sample * sample);
                 double rms = Math.Sqrt(sum / unprocessedBuffer.Length);
-                var decibel =  (float)Scale.ToDecibel(rms);
+                var decibel = (float)Scale.ToDecibel(rms);
                 return decibel + 50; // magic number.
             }
 

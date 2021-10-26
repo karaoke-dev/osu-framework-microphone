@@ -20,7 +20,7 @@ namespace osu.Framework.Tests
                 base.LoadComplete();
 
                 // Need to cache IOSMicrophoneHandler in here to let MicrophoneInputManager knows.
-                Host.Dependencies.CacheAs(typeof(OsuTKMicrophoneHandler), new IOSMicrophoneHandler());
+                Host.Dependencies.CacheAs(typeof(MicrophoneHandler), new IOSMicrophoneHandler());
             }
         }
     }

@@ -20,8 +20,8 @@ namespace osu.Framework.Tests
                 Children = new Drawable[]
                 {
                     new TestBrowser(),
-                    new CursorContainer(),
-                },
+                    new CursorContainer()
+                }
             };
         }
 

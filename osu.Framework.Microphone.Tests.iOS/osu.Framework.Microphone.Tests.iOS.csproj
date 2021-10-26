@@ -52,10 +52,5 @@
   <ItemGroup>
     <Reference Include="System.Numerics" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="ppy.osu.Framework.iOS">
-      <Version>2021.427.0</Version>
-    </PackageReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

@@ -11,7 +11,8 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidApplication>True</AndroidApplication>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
+    <!-- This does not take effect, unlike osu game repo.  -->
+    <!--<TargetFrameworkVersion>v10.0</TargetFrameworkVersion>-->
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a</AndroidSupportedAbis>
@@ -22,7 +23,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <DebugSymbols>True</DebugSymbols>
-    <DebugType>portable</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AndroidManagedSymbols>false</AndroidManagedSymbols>
@@ -31,8 +32,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DebugSymbols>false</DebugSymbols>
-    <DebugType>None</DebugType>
-    <Optimize>True</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
     <AndroidManagedSymbols>false</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
@@ -46,11 +47,7 @@
     <Reference Include="Java.Interop" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ppy.osu.Game.Resources" Version="2021.706.0" />
-    <PackageReference Include="ppy.osu.Framework.Android" Version="2021.707.0" />
-  </ItemGroup>
-  <ItemGroup Label="Transitive Dependencies">
-    <!-- Realm needs to be directly referenced in all Xamarin projects, as it will not pull in its transitive dependencies otherwise. -->
-    <PackageReference Include="Realm" Version="10.2.1" />
+    <PackageReference Include="ppy.osu.Game.Resources" Version="2021.1026.0" />
+    <PackageReference Include="ppy.osu.Framework.Android" Version="2021.1026.0" />
   </ItemGroup>
 </Project>

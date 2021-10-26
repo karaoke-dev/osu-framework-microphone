@@ -16,7 +16,7 @@ namespace osu.Framework.Input.StateChanges
                 throw new NotMicrophoneInputStateException();
 
             var microphone = microphoneInputState.Microphone;
-            if(microphone.Voice == Voice)
+            if (microphone.Voice == Voice)
                 return;
 
             var lastVoice = microphone.Voice;
