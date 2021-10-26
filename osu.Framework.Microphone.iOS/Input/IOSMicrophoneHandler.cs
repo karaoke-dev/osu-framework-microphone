@@ -6,7 +6,7 @@ using osu.Framework.Platform;
 
 namespace osu.Framework.iOS.Input
 {
-    public class IOSMicrophoneHandler : OsuTKMicrophoneHandler
+    public class IOSMicrophoneHandler : MicrophoneHandler
     {
         public override bool IsActive => throw new System.NotImplementedException();
 
