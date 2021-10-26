@@ -125,11 +125,7 @@ namespace osu.Framework.Input.Handlers.Microphone
             {
                 // change to this way: https://stackoverflow.com/a/4152702/4105113
                 // not really sure if it's right but at least result is better.
-                double sum = 0;
-                foreach (double sample in unprocessedBuffer)
-                {
-                    sum += (sample * sample);
-                }
+                double sum = unprocessedBuffer.Sum(sample => sample * sample);
                 double rms = Math.Sqrt(sum / unprocessedBuffer.Length);
                 var decibel =  (float)Scale.ToDecibel(rms);
                 return decibel + 50; // magic number.

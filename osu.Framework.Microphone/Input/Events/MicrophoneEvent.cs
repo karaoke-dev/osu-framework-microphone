@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Input.States;
-using System;
 
 namespace osu.Framework.Input.Events
 {

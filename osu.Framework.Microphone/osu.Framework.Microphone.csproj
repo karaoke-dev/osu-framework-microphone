@@ -22,8 +22,9 @@
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup Label="Package References">
-    <PackageReference Include="NWaves" Version="0.9.5" />
-    <PackageReference Include="ppy.osu.Framework" Version="2021.916.1" />
+    <PackageReference Include="NWaves" Version="0.9.6" />
+    <PackageReference Include="ppy.osu.Framework" Version="2021.1026.0" />
+    <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.3" />
   </ItemGroup>
 
 </Project>
