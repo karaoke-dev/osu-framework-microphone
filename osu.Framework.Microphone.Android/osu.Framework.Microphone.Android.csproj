@@ -9,8 +9,8 @@
     <Description>Unofficial osu!framework extension for using microphon as input device.</Description>
   </PropertyGroup>
   <PropertyGroup Label="Nuget">
-    <Title>ppy.osu.Framework.Android</Title>
-    <PackageId>ppy.osu.Framework.Android</PackageId>
+    <Title>osu.Framework.Microphone.Android</Title>
+    <PackageId>osu.Framework.Microphone.Android</PackageId>
     <PackageTags>osu-framework microphone andy840119</PackageTags>
   </PropertyGroup>
   <ItemGroup>
