@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:
-          name: osu-framework-test-results-${{matrix.os.prettyname}}-${{matrix.threadingMode}}
+          name: osu-framework-microphone-test-results-${{matrix.os.prettyname}}-${{matrix.threadingMode}}
           path: ${{github.workspace}}/TestResults/TestResults-${{matrix.os.prettyname}}-${{matrix.threadingMode}}.trx
 
   build-only-android:
@@ -67,7 +67,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1
 
       - name: Build
-        run: msbuild osu-framework.Android.slnf /restore /p:Configuration=Debug
+        run: msbuild osu-framework-microphone.Android.slnf /restore /p:Configuration=Debug
 
   build-only-ios:
     name: Build only (iOS)
@@ -126,7 +126,7 @@ jobs:
       #   run: dotnet format --dry-run --check
 
       - name: InspectCode
-        run: dotnet jb inspectcode $(pwd)/osu-framework.Desktop.slnf --output=$(pwd)/inspectcodereport.xml --cachesDir=$(pwd)/inspectcode --verbosity=WARN
+        run: dotnet jb inspectcode $(pwd)/osu-framework-microphone.Desktop.slnf --output=$(pwd)/inspectcodereport.xml --cachesDir=$(pwd)/inspectcode --verbosity=WARN
 
       - name: NVika
         run: dotnet nvika parsereport "${{github.workspace}}/inspectcodereport.xml" --treatwarningsaserrors
