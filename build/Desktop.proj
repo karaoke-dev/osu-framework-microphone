@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.Build.Traversal/3.0.2">
+  <ItemGroup>
+    <ProjectReference Include="..\osu.Framework.Microphone.Tests\osu.Framework.Microphone.Tests.csproj" />
+    <ProjectReference Include="..\osu.Framework.Microphone\osu.Framework.Microphone.csproj" />
+  </ItemGroup>
+</Project>
