@@ -3,6 +3,5 @@ updates:
 - package-ecosystem: nuget
   directory: "/"
   schedule:
-    interval: monthly
-    time: "17:00"
-  open-pull-requests-limit: 99
+    interval: daily
+  open-pull-requests-limit: 10
