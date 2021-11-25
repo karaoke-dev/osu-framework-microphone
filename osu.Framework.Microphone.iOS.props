@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup Label="Package References">
     <PackageReference Include="ppy.osu.Game.Resources" Version="2021.1112.0" />
-    <PackageReference Include="ppy.osu.Framework.iOS" Version="2021.1119.0" />
+    <PackageReference Include="ppy.osu.Framework.iOS" Version="2021.1124.0" />
   </ItemGroup>
   <ItemGroup>
     <NativeReference Include="..\osu.Framework.iOS\*.a">
