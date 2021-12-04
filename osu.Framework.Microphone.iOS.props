@@ -53,7 +53,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup Label="Package References">
-    <PackageReference Include="ppy.osu.Game.Resources" Version="2021.1112.0" />
+    <PackageReference Include="ppy.osu.Game.Resources" Version="2021.1203.0" />
     <PackageReference Include="ppy.osu.Framework.iOS" Version="2021.1203.0" />
   </ItemGroup>
   <ItemGroup>
