@@ -6,6 +6,7 @@ using NWaves.Features;
 using osu.Framework.Input.StateChanges;
 using osu.Framework.Platform;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using NWaves.Utils;
@@ -122,12 +123,12 @@ namespace osu.Framework.Input.Handlers.Microphone
 
             return true;
 
-            static float calculateDecibel(float[] unprocessedBuffer)
+            static float calculateDecibel(IReadOnlyCollection<float> unprocessedBuffer)
             {
                 // change to this way: https://stackoverflow.com/a/4152702/4105113
                 // not really sure if it's right but at least result is better.
                 double sum = unprocessedBuffer.Sum(sample => sample * sample);
-                double rms = Math.Sqrt(sum / unprocessedBuffer.Length);
+                double rms = Math.Sqrt(sum / unprocessedBuffer.Count);
                 var decibel = (float)Scale.ToDecibel(rms);
                 return decibel + 50; // magic number.
             }

@@ -20,9 +20,9 @@ namespace osu.Framework.iOS.Input
             var session = AVAudioSession.SharedInstance();
             var success = false;
 
-            Logger.Log("Begin Recording", LoggingTarget.Information, LogLevel.Verbose);
+            Logger.Log("Begin Recording", LoggingTarget.Information);
 
-            session.RequestRecordPermission((granted) =>
+            session.RequestRecordPermission(granted =>
             {
                 Logger.Log($"Audio Permission: {granted}", LoggingTarget.Information);
 
