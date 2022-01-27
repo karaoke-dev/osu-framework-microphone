@@ -13,7 +13,7 @@ namespace osu.Framework.Tests
         {
             bool benchmark = args.Length > 0 && args[0] == @"-benchmark";
 
-            using (GameHost host = Host.GetSuitableHost(@"microphone-tests"))
+            using (GameHost host = Host.GetSuitableDesktopHost(@"microphone-tests"))
             {
                 if (benchmark)
                     host.Run(new AutomatedVisualTestGame());
