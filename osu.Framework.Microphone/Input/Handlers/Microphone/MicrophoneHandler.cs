@@ -21,7 +21,7 @@ namespace osu.Framework.Input.Handlers.Microphone
         /// <summary>
         /// Do not calculate pitch value if decibel is less then <see cref="Sensitivity"/>
         /// </summary>
-        public BindableFloat Sensitivity { get; } = new BindableFloat(10)
+        public BindableFloat Sensitivity { get; } = new(10)
         {
             MinValue = 0,
             MaxValue = 100,
