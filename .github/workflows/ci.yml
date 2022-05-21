@@ -32,6 +32,15 @@ jobs:
       - name: Restore Packages
         run: dotnet restore
 
+      - name: Restore inspectcode cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/inspectcode
+          key: inspectcode-${{ hashFiles('.config/dotnet-tools.json', '.github/workflows/ci.yml', 'osu-framework-microphone.sln*', '.editorconfig', '.globalconfig', 'CodeAnalysis/*') }}
+
+      - name: Dotnet code style
+        run: dotnet build -c Debug -warnaserror build/Desktop.proj -p:EnforceCodeStyleInBuild=true
+
       # todo: add this test back.
       # - name: CodeFileSanity
       #   run: |
