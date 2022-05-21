@@ -45,7 +45,7 @@ namespace osu.Framework.Input
 
         protected virtual void HandleMicrophoneStateChange(MicrophoneVoiceChangeEvent microphoneVoiceChange)
         {
-            if (!(microphoneVoiceChange.State is IMicrophoneInputState inputState))
+            if (microphoneVoiceChange.State is not IMicrophoneInputState inputState)
                 throw new NotMicrophoneInputStateException();
 
             var lastVoice = microphoneVoiceChange.LastVoice;
