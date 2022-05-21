@@ -52,21 +52,21 @@ namespace osu.Framework.Tests.Visual.Input
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
-                var pitch = e.CurrentState.Microphone.Voice.Pitch;
+                float pitch = e.CurrentState.Microphone.Voice.Pitch;
                 BoxText.Text = "Pitch start : " + pitch;
                 return base.OnMicrophoneStartSinging(e);
             }
 
             protected override bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
             {
-                var pitch = e.CurrentState.Microphone.Voice.Pitch;
+                float pitch = e.CurrentState.Microphone.Voice.Pitch;
                 BoxText.Text = "Pitch end : " + pitch;
                 return base.OnMicrophoneEndSinging(e);
             }
 
             protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
-                var pitch = e.CurrentState.Microphone.Voice.Pitch;
+                float pitch = e.CurrentState.Microphone.Voice.Pitch;
                 Y = -(pitch - 50);
                 BoxText.Text = "Pitching : " + pitch;
                 return base.OnMicrophoneSinging(e);
@@ -77,21 +77,21 @@ namespace osu.Framework.Tests.Visual.Input
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
-                var decibel = e.CurrentState.Microphone.Voice.Decibel;
+                float decibel = e.CurrentState.Microphone.Voice.Decibel;
                 BoxText.Text = "Decibel start : " + decibel;
                 return base.OnMicrophoneStartSinging(e);
             }
 
             protected override bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
             {
-                var decibel = e.CurrentState.Microphone.Voice.Decibel;
+                float decibel = e.CurrentState.Microphone.Voice.Decibel;
                 BoxText.Text = "Decibel end : " + decibel;
                 return base.OnMicrophoneEndSinging(e);
             }
 
             protected override bool OnMicrophoneSinging(MicrophonePitchingEvent e)
             {
-                var decibel = e.CurrentState.Microphone.Voice.Decibel;
+                float decibel = e.CurrentState.Microphone.Voice.Decibel;
                 Y = -(decibel - 50) * 5;
                 BoxText.Text = "Decibel : " + decibel;
                 return base.OnMicrophoneSinging(e);

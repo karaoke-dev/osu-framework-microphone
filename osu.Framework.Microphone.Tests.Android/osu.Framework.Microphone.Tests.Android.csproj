@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{320089C6-A141-4D3E-BD5F-C4A6CE9E567B}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <RootNamespace>osu.Framework.Microphone.Tests.Android</RootNamespace>
     <AssemblyName>osu.Framework.Microphone.Tests.Android</AssemblyName>
+    <RootNamespace>osu.Framework.Tests.Android</RootNamespace>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a</AndroidSupportedAbis>
     <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>

@@ -45,18 +45,26 @@ namespace osu.Framework.Input
 
         protected virtual void HandleMicrophoneStateChange(MicrophoneVoiceChangeEvent microphoneVoiceChange)
         {
-            if (!(microphoneVoiceChange.State is IMicrophoneInputState inputState))
+            if (microphoneVoiceChange.State is not IMicrophoneInputState inputState)
                 throw new NotMicrophoneInputStateException();
 
             var lastVoice = microphoneVoiceChange.LastVoice;
             var voice = inputState.Microphone.Voice;
 
-            if (!lastVoice.HasVoice && voice.HasVoice)
-                microphoneStartSinging(inputState);
-            else if (lastVoice.HasVoice && !voice.HasVoice)
-                microphoneEndSinging(inputState);
-            else
-                microphoneSinging(inputState);
+            switch (lastVoice.HasVoice)
+            {
+                case false when voice.HasVoice:
+                    microphoneStartSinging(inputState);
+                    break;
+
+                case true when !voice.HasVoice:
+                    microphoneEndSinging(inputState);
+                    break;
+
+                default:
+                    microphoneSinging(inputState);
+                    break;
+            }
         }
 
         private bool microphoneStartSinging(IMicrophoneInputState state) => PropagateBlockableEvent(NonPositionalInputQueue, new MicrophoneStartPitchingEvent(state));

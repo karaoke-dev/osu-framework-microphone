@@ -12,7 +12,7 @@ namespace osu.Framework.Input.StateChanges
 
         public void Apply(InputState state, IInputStateChangeHandler handler)
         {
-            if (!(state is IMicrophoneInputState microphoneInputState))
+            if (state is not IMicrophoneInputState microphoneInputState)
                 throw new NotMicrophoneInputStateException();
 
             var microphone = microphoneInputState.Microphone;

@@ -3,7 +3,7 @@
     "path": "osu-framework-microphone.sln",
     "projects": [
       "osu.Framework.Microphone.Tests\\osu.Framework.Microphone.Tests.csproj",
-      "osu.Framework.Microphone\\osu.Framework.Microphone.csproj",
+      "osu.Framework.Microphone\\osu.Framework.Microphone.csproj"
     ]
   }
 }
