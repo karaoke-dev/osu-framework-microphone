@@ -1,4 +1,4 @@
-﻿<!-- Contains required properties for osu!framework projects. -->
+<!-- Contains required properties for osu!framework projects. -->
 <Project>
   <PropertyGroup Label="C#">
     <LangVersion>9.0</LangVersion>
@@ -19,9 +19,8 @@
     </None>
   </ItemGroup>
   <ItemGroup Label="Code Analysis">
-    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.3" PrivateAssets="All" />
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)CodeAnalysis\BannedSymbols.txt" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0" PrivateAssets="All" />
   </ItemGroup>
   <PropertyGroup Label="Code Analysis">
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)CodeAnalysis\osu-framework-microphone.ruleset</CodeAnalysisRuleSet>
