@@ -51,9 +51,9 @@ namespace osu.Framework.Input.Handlers.Microphone
                         return;
 
                     recordInfo = Bass.RecordingInfo;
-                    var frequency = recordInfo.Frequency;
-                    var channel = recordInfo.Channels;
-                    var period = 10 * channel;
+                    int frequency = recordInfo.Frequency;
+                    int channel = recordInfo.Channels;
+                    int period = 10 * channel;
 
                     stream = Bass.RecordStart(frequency, channel, BassFlags.RecordPause | BassFlags.Float, period, procedure);
 
@@ -74,7 +74,7 @@ namespace osu.Framework.Input.Handlers.Microphone
 
             static bool isCurrentDeviceValid()
             {
-                var index = Bass.CurrentRecordingDevice;
+                int index = Bass.CurrentRecordingDevice;
                 var device = index == Bass.DefaultDevice ? default : Bass.RecordGetDeviceInfo(index);
 
                 return device.IsEnabled && device.IsInitialized;
@@ -94,8 +94,8 @@ namespace osu.Framework.Input.Handlers.Microphone
         private bool procedure(int handle, IntPtr buffer, int length, IntPtr user)
         {
             // Read and save buffer
-            var size = length / 4;
-            var localBuffer = new float[size];
+            int size = length / 4;
+            float[] localBuffer = new float[size];
 
             Marshal.Copy(buffer, localBuffer, 0, size);
 
@@ -107,8 +107,8 @@ namespace osu.Framework.Input.Handlers.Microphone
                 return true;
 
             // send no voice event if voice is too small.
-            var decibel = calculateDecibel(unprocessedBuffer);
-            var pitch = decibel < Sensitivity.Value ? 0 : calculatePitch(unprocessedBuffer, recordInfo.Frequency);
+            float decibel = calculateDecibel(unprocessedBuffer);
+            float pitch = decibel < Sensitivity.Value ? 0 : calculatePitch(unprocessedBuffer, recordInfo.Frequency);
 
             var voice = new Voice(pitch, decibel);
 
@@ -129,7 +129,7 @@ namespace osu.Framework.Input.Handlers.Microphone
                 // not really sure if it's right but at least result is better.
                 double sum = unprocessedBuffer.Sum(sample => sample * sample);
                 double rms = Math.Sqrt(sum / unprocessedBuffer.Count);
-                var decibel = (float)Scale.ToDecibel(rms);
+                float decibel = (float)Scale.ToDecibel(rms);
                 return decibel + 50; // magic number.
             }
 

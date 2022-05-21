@@ -18,7 +18,7 @@ namespace osu.Framework.iOS.Input
         public override bool Initialize(GameHost host)
         {
             var session = AVAudioSession.SharedInstance();
-            var success = false;
+            bool success = false;
 
             Logger.Log("Begin Recording", LoggingTarget.Information);
 
