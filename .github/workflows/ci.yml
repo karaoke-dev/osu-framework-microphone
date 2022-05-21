@@ -7,6 +7,55 @@ on:
     branches: [ master ]
 
 jobs:
+  inspect-code:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # FIXME: Tools won't run in .NET 6.0 unless you install 3.1.x LTS side by side.
+      # https://itnext.io/how-to-support-multiple-net-sdks-in-github-actions-workflows-b988daa884e
+      - name: Install .NET 3.1.x LTS
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "3.1.x"
+
+      - name: Install .NET 6.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Restore Tools
+        run: dotnet tool restore
+
+      - name: Restore Packages
+        run: dotnet restore
+
+      # todo: add this test back.
+      # - name: CodeFileSanity
+      #   run: |
+      #     # TODO: Add ignore filters and GitHub Workflow Command Reporting in CFS. That way we don't have to do this workaround.
+      #     # FIXME: Suppress warnings from templates project
+      #     exit_code=0
+      #     while read -r line; do
+      #       if [[ ! -z "$line" && "$line" != *"/osu.Framework.Templates/"* ]]; then
+      #         echo "::error::$line"
+      #         exit_code=1
+      #       fi
+      #     done <<< $(dotnet codefilesanity)
+      #     exit $exit_code
+
+      # Temporarily disabled due to test failures, but it won't work anyway until the tool is upgraded.
+      # - name: .NET Format (Dry Run)
+      #   run: dotnet format --dry-run --check
+
+      - name: InspectCode
+        run: dotnet jb inspectcode $(pwd)/osu-framework-microphone.Desktop.slnf --output=$(pwd)/inspectcodereport.xml --cachesDir=$(pwd)/inspectcode --verbosity=WARN
+
+      - name: NVika
+        run: dotnet nvika parsereport "${{github.workspace}}/inspectcodereport.xml" --treatwarningsaserrors
+
   test:
     name: Test
     runs-on: ${{matrix.os.fullname}}
@@ -92,52 +141,3 @@ jobs:
       # Build just the iOS framework project for now.
       - name: Build
         run: msbuild osu.Framework.Microphone.iOS/osu.Framework.Microphone.iOS.csproj /restore /p:Configuration=Debug
-
-  inspect-code:
-    name: Code Quality
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      # FIXME: Tools won't run in .NET 6.0 unless you install 3.1.x LTS side by side.
-      # https://itnext.io/how-to-support-multiple-net-sdks-in-github-actions-workflows-b988daa884e
-      - name: Install .NET 3.1.x LTS
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "3.1.x"
-
-      - name: Install .NET 6.0.x
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "6.0.x"
-
-      - name: Restore Tools
-        run: dotnet tool restore
-
-      - name: Restore Packages
-        run: dotnet restore
-
-      # todo: add this test back.
-      # - name: CodeFileSanity
-      #   run: |
-      #     # TODO: Add ignore filters and GitHub Workflow Command Reporting in CFS. That way we don't have to do this workaround.
-      #     # FIXME: Suppress warnings from templates project
-      #     exit_code=0
-      #     while read -r line; do
-      #       if [[ ! -z "$line" && "$line" != *"/osu.Framework.Templates/"* ]]; then
-      #         echo "::error::$line"
-      #         exit_code=1
-      #       fi
-      #     done <<< $(dotnet codefilesanity)
-      #     exit $exit_code
-
-      # Temporarily disabled due to test failures, but it won't work anyway until the tool is upgraded.
-      # - name: .NET Format (Dry Run)
-      #   run: dotnet format --dry-run --check
-
-      - name: InspectCode
-        run: dotnet jb inspectcode $(pwd)/osu-framework-microphone.Desktop.slnf --output=$(pwd)/inspectcodereport.xml --cachesDir=$(pwd)/inspectcode --verbosity=WARN
-
-      - name: NVika
-        run: dotnet nvika parsereport "${{github.workspace}}/inspectcodereport.xml" --treatwarningsaserrors
