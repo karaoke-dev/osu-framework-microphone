@@ -45,7 +45,7 @@ namespace osu.Framework.Tests.Visual.Input
 
         private class TestMicrophoneInputManager : MicrophoneInputManager
         {
-            public MicrophoneHandler MicrophoneHandler => InputHandlers.OfType<MicrophoneHandler>().FirstOrDefault();
+            public MicrophoneHandler MicrophoneHandler => InputHandlers.OfType<MicrophoneHandler>().First();
         }
 
         private class MicrophonePitchVisualization : MicrophoneVisualization
