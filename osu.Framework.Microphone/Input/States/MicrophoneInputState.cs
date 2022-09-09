@@ -17,14 +17,14 @@ namespace osu.Framework.Input.States
         public MicrophoneInputState(MicrophoneInputState other)
             : base(other)
         {
-            Microphone = other.Microphone ?? new MicrophoneState();
+            Microphone = other.Microphone;
         }
 
         /// <summary>
         /// Creates a new <see cref="InputState"/> using given individual input states.
         /// </summary>
         /// <param name="microphone">The microphone state.</param>
-        public MicrophoneInputState(MicrophoneState microphone)
+        public MicrophoneInputState(MicrophoneState? microphone)
         {
             Microphone = microphone ?? new MicrophoneState();
         }
