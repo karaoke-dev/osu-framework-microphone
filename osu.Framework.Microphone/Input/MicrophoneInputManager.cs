@@ -1,11 +1,11 @@
 ﻿// Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Input.Events;
 using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Input.StateChanges.Events;
 using osu.Framework.Input.States;
-using System;
 
 namespace osu.Framework.Input
 {

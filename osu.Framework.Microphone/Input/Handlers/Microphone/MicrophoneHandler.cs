@@ -1,16 +1,16 @@
 ﻿// Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using ManagedBass;
-using NWaves.Features;
-using osu.Framework.Input.StateChanges;
-using osu.Framework.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using ManagedBass;
+using NWaves.Features;
 using NWaves.Utils;
 using osu.Framework.Bindables;
+using osu.Framework.Input.StateChanges;
+using osu.Framework.Platform;
 
 namespace osu.Framework.Input.Handlers.Microphone
 {
