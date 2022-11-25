@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
     <RuntimeIdentifiers>android-x86;android-arm;android-arm64</RuntimeIdentifiers>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
