@@ -9,7 +9,7 @@ using osu.Framework.Input.States;
 
 namespace osu.Framework.Input
 {
-    public class MicrophoneInputManager : CustomInputManager
+    public partial class MicrophoneInputManager : CustomInputManager
     {
         protected override InputState CreateInitialState() => new MicrophoneInputState(new MicrophoneState());
 

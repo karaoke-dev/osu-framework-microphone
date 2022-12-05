@@ -15,7 +15,7 @@ using osuTK.Graphics;
 namespace osu.Framework.Tests.Visual.Input
 {
     [TestFixture]
-    public class TestSceneMicrophone : FrameworkTestScene
+    public partial class TestSceneMicrophone : FrameworkTestScene
     {
         public TestSceneMicrophone()
         {
@@ -43,12 +43,12 @@ namespace osu.Framework.Tests.Visual.Input
             Child = manager;
         }
 
-        private class TestMicrophoneInputManager : MicrophoneInputManager
+        private partial class TestMicrophoneInputManager : MicrophoneInputManager
         {
             public MicrophoneHandler MicrophoneHandler => InputHandlers.OfType<MicrophoneHandler>().First();
         }
 
-        private class MicrophonePitchVisualization : MicrophoneVisualization
+        private partial class MicrophonePitchVisualization : MicrophoneVisualization
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
@@ -73,7 +73,7 @@ namespace osu.Framework.Tests.Visual.Input
             }
         }
 
-        private class MicrophoneDecibelVisualization : MicrophoneVisualization
+        private partial class MicrophoneDecibelVisualization : MicrophoneVisualization
         {
             protected override bool OnMicrophoneStartSinging(MicrophoneStartPitchingEvent e)
             {
@@ -98,7 +98,7 @@ namespace osu.Framework.Tests.Visual.Input
             }
         }
 
-        private class MicrophoneVisualization : CompositeDrawable
+        private partial class MicrophoneVisualization : CompositeDrawable
         {
             private readonly Box background;
 
