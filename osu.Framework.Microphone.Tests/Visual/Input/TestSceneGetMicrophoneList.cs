@@ -8,7 +8,7 @@ using osu.Framework.Input;
 namespace osu.Framework.Tests.Visual.Input
 {
     [TestFixture]
-    public class TestSceneGetMicrophoneList : FrameworkTestScene
+    public partial class TestSceneGetMicrophoneList : FrameworkTestScene
     {
         public TestSceneGetMicrophoneList()
         {
