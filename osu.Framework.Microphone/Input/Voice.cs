@@ -39,7 +39,7 @@ namespace osu.Framework.Input
         public static bool operator ==(Voice left, Voice right) => left.Equals(right);
         public static bool operator !=(Voice left, Voice right) => !(left == right);
 
-        public override bool Equals(object obj) => obj is Voice other && Equals(other);
+        public override bool Equals(object? obj) => obj is Voice other && Equals(other);
 
         public override int GetHashCode() => Pitch.GetHashCode();
     }
