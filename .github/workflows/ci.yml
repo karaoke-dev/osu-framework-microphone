@@ -139,7 +139,7 @@ jobs:
           dotnet-version: "6.0.x"
 
       - name: Restore .NET workloads
-        run: dotnet workload restore
+        run: dotnet workload restore osu.Framework.Microphone.iOS/osu.Framework.Microphone.iOS.csproj
 
       - name: Compile
         run: dotnet build -c Debug osu-framework-microphone.iOS.slnf
