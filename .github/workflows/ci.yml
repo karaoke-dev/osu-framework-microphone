@@ -126,6 +126,8 @@ jobs:
         run: dotnet build -c Debug osu-framework-microphone.Android.slnf
 
   build-only-ios:
+    # ignore the ios build.
+    if: false
     name: Build only (iOS)
     runs-on: macos-latest
     timeout-minutes: 60
@@ -139,7 +141,7 @@ jobs:
           dotnet-version: "6.0.x"
 
       - name: Restore .NET workloads
-        run: dotnet workload restore osu.Framework.Microphone.iOS/osu.Framework.Microphone.iOS.csproj
+        run: dotnet workload restore
 
       - name: Compile
         run: dotnet build -c Debug osu-framework-microphone.iOS.slnf
