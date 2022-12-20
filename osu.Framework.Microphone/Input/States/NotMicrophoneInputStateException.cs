@@ -3,9 +3,8 @@
 
 using System;
 
-namespace osu.Framework.Input.States
+namespace osu.Framework.Input.States;
+
+public class NotMicrophoneInputStateException : InvalidOperationException
 {
-    public class NotMicrophoneInputStateException : InvalidOperationException
-    {
-    }
 }

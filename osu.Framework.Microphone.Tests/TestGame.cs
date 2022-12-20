@@ -4,14 +4,13 @@
 using osu.Framework.Allocation;
 using osu.Framework.IO.Stores;
 
-namespace osu.Framework.Tests
+namespace osu.Framework.Tests;
+
+internal partial class TestGame : Game
 {
-    internal partial class TestGame : Game
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            Resources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(typeof(TestGame).Assembly), "Resources"));
-        }
+        Resources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(typeof(TestGame).Assembly), "Resources"));
     }
 }

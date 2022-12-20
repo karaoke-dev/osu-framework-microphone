@@ -4,11 +4,10 @@
 using Foundation;
 using osu.Framework.iOS;
 
-namespace osu.Framework.Tests
+namespace osu.Framework.Tests;
+
+[Register("AppDelegate")]
+public class AppDelegate : GameAppDelegate
 {
-    [Register("AppDelegate")]
-    public class AppDelegate : GameAppDelegate
-    {
-        protected override Game CreateGame() => new VisualTestGame();
-    }
+    protected override Game CreateGame() => new VisualTestGame();
 }

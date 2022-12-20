@@ -3,13 +3,12 @@
 
 using osu.Framework.Input.States;
 
-namespace osu.Framework.Input.Events
+namespace osu.Framework.Input.Events;
+
+public class MicrophoneEndPitchingEvent : MicrophoneEvent
 {
-    public class MicrophoneEndPitchingEvent : MicrophoneEvent
+    public MicrophoneEndPitchingEvent(IMicrophoneInputState state)
+        : base(state)
     {
-        public MicrophoneEndPitchingEvent(IMicrophoneInputState state)
-            : base(state)
-        {
-        }
     }
 }

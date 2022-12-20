@@ -3,13 +3,12 @@
 
 using UIKit;
 
-namespace osu.Framework.Tests
+namespace osu.Framework.Tests;
+
+public static class Application
 {
-    public static class Application
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            UIApplication.Main(args, null, typeof(AppDelegate));
-        }
+        UIApplication.Main(args, null, typeof(AppDelegate));
     }
 }

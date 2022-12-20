@@ -5,19 +5,18 @@ using osu.Framework.Allocation;
 using osu.Framework.IO.Stores;
 using osu.Framework.Testing;
 
-namespace osu.Framework.Tests.Visual
-{
-    public abstract partial class FrameworkTestScene : TestScene
-    {
-        protected override ITestSceneTestRunner CreateRunner() => new FrameworkTestSceneTestRunner();
+namespace osu.Framework.Tests.Visual;
 
-        private partial class FrameworkTestSceneTestRunner : TestSceneTestRunner
+public abstract partial class FrameworkTestScene : TestScene
+{
+    protected override ITestSceneTestRunner CreateRunner() => new FrameworkTestSceneTestRunner();
+
+    private partial class FrameworkTestSceneTestRunner : TestSceneTestRunner
+    {
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            [BackgroundDependencyLoader]
-            private void load()
-            {
-                Resources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(typeof(FrameworkTestScene).Assembly), "Resources"));
-            }
+            Resources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(typeof(FrameworkTestScene).Assembly), "Resources"));
         }
     }
 }

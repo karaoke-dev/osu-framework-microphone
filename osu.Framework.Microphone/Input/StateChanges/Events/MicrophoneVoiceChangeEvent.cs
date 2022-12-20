@@ -3,16 +3,15 @@
 
 using osu.Framework.Input.States;
 
-namespace osu.Framework.Input.StateChanges.Events
-{
-    public class MicrophoneVoiceChangeEvent : InputStateChangeEvent
-    {
-        public readonly Voice LastVoice;
+namespace osu.Framework.Input.StateChanges.Events;
 
-        public MicrophoneVoiceChangeEvent(InputState state, IInput input, Voice lastVoice)
-            : base(state, input)
-        {
-            LastVoice = lastVoice;
-        }
+public class MicrophoneVoiceChangeEvent : InputStateChangeEvent
+{
+    public readonly Voice LastVoice;
+
+    public MicrophoneVoiceChangeEvent(InputState state, IInput input, Voice lastVoice)
+        : base(state, input)
+    {
+        LastVoice = lastVoice;
     }
 }

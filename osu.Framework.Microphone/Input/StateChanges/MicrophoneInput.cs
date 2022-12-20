@@ -4,24 +4,23 @@
 using osu.Framework.Input.StateChanges.Events;
 using osu.Framework.Input.States;
 
-namespace osu.Framework.Input.StateChanges
+namespace osu.Framework.Input.StateChanges;
+
+public class MicrophoneInput : IInput
 {
-    public class MicrophoneInput : IInput
+    public Voice Voice;
+
+    public void Apply(InputState state, IInputStateChangeHandler handler)
     {
-        public Voice Voice;
+        if (state is not IMicrophoneInputState microphoneInputState)
+            throw new NotMicrophoneInputStateException();
 
-        public void Apply(InputState state, IInputStateChangeHandler handler)
-        {
-            if (state is not IMicrophoneInputState microphoneInputState)
-                throw new NotMicrophoneInputStateException();
+        var microphone = microphoneInputState.Microphone;
+        if (microphone.Voice == Voice)
+            return;
 
-            var microphone = microphoneInputState.Microphone;
-            if (microphone.Voice == Voice)
-                return;
-
-            var lastVoice = microphone.Voice;
-            microphone.Voice = Voice;
-            handler.HandleInputStateChange(new MicrophoneVoiceChangeEvent(state, this, lastVoice));
-        }
+        var lastVoice = microphone.Voice;
+        microphone.Voice = Voice;
+        handler.HandleInputStateChange(new MicrophoneVoiceChangeEvent(state, this, lastVoice));
     }
 }

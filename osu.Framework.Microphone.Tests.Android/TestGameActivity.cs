@@ -5,12 +5,11 @@ using Android.App;
 using Android.Content.PM;
 using osu.Framework.Android;
 
-namespace osu.Framework.Tests.Android
+namespace osu.Framework.Tests.Android;
+
+[Activity(MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize, Theme = "@android:style/Theme.NoTitleBar")]
+public class TestGameActivity : AndroidGameActivity
 {
-    [Activity(MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize, Theme = "@android:style/Theme.NoTitleBar")]
-    public class TestGameActivity : AndroidGameActivity
-    {
-        protected override Game CreateGame()
-            => new VisualTestGame();
-    }
+    protected override Game CreateGame()
+        => new VisualTestGame();
 }

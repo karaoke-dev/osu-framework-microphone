@@ -12,137 +12,136 @@ using osu.Framework.Bindables;
 using osu.Framework.Input.StateChanges;
 using osu.Framework.Platform;
 
-namespace osu.Framework.Input.Handlers.Microphone
+namespace osu.Framework.Input.Handlers.Microphone;
+
+public class MicrophoneHandler : InputHandler
 {
-    public class MicrophoneHandler : InputHandler
+    public override bool IsActive => Bass.RecordingDeviceCount > 0;
+
+    /// <summary>
+    /// Do not calculate pitch value if decibel is less then <see cref="Sensitivity"/>
+    /// </summary>
+    public BindableFloat Sensitivity { get; } = new(10)
     {
-        public override bool IsActive => Bass.RecordingDeviceCount > 0;
+        MinValue = 0,
+        MaxValue = 100,
+        Precision = 1
+    };
 
-        /// <summary>
-        /// Do not calculate pitch value if decibel is less then <see cref="Sensitivity"/>
-        /// </summary>
-        public BindableFloat Sensitivity { get; } = new(10)
+    private readonly int deviceIndex;
+    private int stream;
+
+    public MicrophoneHandler(int device)
+    {
+        deviceIndex = device;
+    }
+
+    private RecordInfo recordInfo;
+
+    public override bool Initialize(GameHost host)
+    {
+        Enabled.BindValueChanged(e =>
         {
-            MinValue = 0,
-            MaxValue = 100,
-            Precision = 1
-        };
-
-        private readonly int deviceIndex;
-        private int stream;
-
-        public MicrophoneHandler(int device)
-        {
-            deviceIndex = device;
-        }
-
-        private RecordInfo recordInfo;
-
-        public override bool Initialize(GameHost host)
-        {
-            Enabled.BindValueChanged(e =>
+            if (e.NewValue)
             {
-                if (e.NewValue)
-                {
-                    // Open microphone device if available
-                    Bass.RecordInit(deviceIndex);
+                // Open microphone device if available
+                Bass.RecordInit(deviceIndex);
 
-                    if (!isCurrentDeviceValid())
-                        return;
+                if (!isCurrentDeviceValid())
+                    return;
 
-                    recordInfo = Bass.RecordingInfo;
-                    int frequency = recordInfo.Frequency;
-                    int channel = recordInfo.Channels;
-                    int period = 10 * channel;
+                recordInfo = Bass.RecordingInfo;
+                int frequency = recordInfo.Frequency;
+                int channel = recordInfo.Channels;
+                int period = 10 * channel;
 
-                    stream = Bass.RecordStart(frequency, channel, BassFlags.RecordPause | BassFlags.Float, period, procedure);
+                stream = Bass.RecordStart(frequency, channel, BassFlags.RecordPause | BassFlags.Float, period, procedure);
 
-                    // Start channel
-                    Bass.ChannelPlay(stream);
-                }
-                else
-                {
-                    // Pause channel
-                    Bass.ChannelPause(stream);
+                // Start channel
+                Bass.ChannelPlay(stream);
+            }
+            else
+            {
+                // Pause channel
+                Bass.ChannelPause(stream);
 
-                    // Close microphone
-                    Bass.RecordFree();
-                }
-            }, true);
+                // Close microphone
+                Bass.RecordFree();
+            }
+        }, true);
 
+        return true;
+
+        static bool isCurrentDeviceValid()
+        {
+            int index = Bass.CurrentRecordingDevice;
+            var device = index == Bass.DefaultDevice ? default : Bass.RecordGetDeviceInfo(index);
+
+            return device.IsEnabled && device.IsInitialized;
+        }
+    }
+
+    public override void Reset()
+    {
+        Sensitivity.SetDefault();
+        base.Reset();
+    }
+
+    private float[] unprocessedBuffer = Array.Empty<float>();
+
+    private Voice lastVoice;
+
+    private bool procedure(int handle, IntPtr buffer, int length, IntPtr user)
+    {
+        // Read and save buffer
+        int size = length / 4;
+        float[] localBuffer = new float[size];
+
+        Marshal.Copy(buffer, localBuffer, 0, size);
+
+        unprocessedBuffer = unprocessedBuffer.Concat(localBuffer).ToArray();
+
+        // note : will cause error if buffer is less than 48000 / 40 * 2 = 2400
+        // so not need to process buffer if less then 2400
+        if (unprocessedBuffer.Length < 2400)
             return true;
 
-            static bool isCurrentDeviceValid()
-            {
-                int index = Bass.CurrentRecordingDevice;
-                var device = index == Bass.DefaultDevice ? default : Bass.RecordGetDeviceInfo(index);
+        // send no voice event if voice is too small.
+        float decibel = calculateDecibel(unprocessedBuffer);
+        float pitch = decibel < Sensitivity.Value ? 0 : calculatePitch(unprocessedBuffer, recordInfo.Frequency);
 
-                return device.IsEnabled && device.IsInitialized;
-            }
-        }
+        var voice = new Voice(pitch, decibel);
 
-        public override void Reset()
+        if (voice != lastVoice)
         {
-            Sensitivity.SetDefault();
-            base.Reset();
+            dispatchEvent(voice);
+            lastVoice = voice;
         }
 
-        private float[] unprocessedBuffer = Array.Empty<float>();
+        // clear the array.
+        unprocessedBuffer = Array.Empty<float>();
 
-        private Voice lastVoice;
+        return true;
 
-        private bool procedure(int handle, IntPtr buffer, int length, IntPtr user)
+        static float calculateDecibel(IReadOnlyCollection<float> unprocessedBuffer)
         {
-            // Read and save buffer
-            int size = length / 4;
-            float[] localBuffer = new float[size];
-
-            Marshal.Copy(buffer, localBuffer, 0, size);
-
-            unprocessedBuffer = unprocessedBuffer.Concat(localBuffer).ToArray();
-
-            // note : will cause error if buffer is less than 48000 / 40 * 2 = 2400
-            // so not need to process buffer if less then 2400
-            if (unprocessedBuffer.Length < 2400)
-                return true;
-
-            // send no voice event if voice is too small.
-            float decibel = calculateDecibel(unprocessedBuffer);
-            float pitch = decibel < Sensitivity.Value ? 0 : calculatePitch(unprocessedBuffer, recordInfo.Frequency);
-
-            var voice = new Voice(pitch, decibel);
-
-            if (voice != lastVoice)
-            {
-                dispatchEvent(voice);
-                lastVoice = voice;
-            }
-
-            // clear the array.
-            unprocessedBuffer = Array.Empty<float>();
-
-            return true;
-
-            static float calculateDecibel(IReadOnlyCollection<float> unprocessedBuffer)
-            {
-                // change to this way: https://stackoverflow.com/a/4152702/4105113
-                // not really sure if it's right but at least result is better.
-                double sum = unprocessedBuffer.Sum(sample => sample * sample);
-                double rms = Math.Sqrt(sum / unprocessedBuffer.Count);
-                float decibel = (float)Scale.ToDecibel(rms);
-                return decibel + 50; // magic number.
-            }
-
-            static float calculatePitch(float[] unprocessedBuffer, int sampleRate)
-                => Pitch.FromYin(unprocessedBuffer, sampleRate, low: 60, high: 1000);
+            // change to this way: https://stackoverflow.com/a/4152702/4105113
+            // not really sure if it's right but at least result is better.
+            double sum = unprocessedBuffer.Sum(sample => sample * sample);
+            double rms = Math.Sqrt(sum / unprocessedBuffer.Count);
+            float decibel = (float)Scale.ToDecibel(rms);
+            return decibel + 50; // magic number.
         }
 
-        private void dispatchEvent(Voice voice)
+        static float calculatePitch(float[] unprocessedBuffer, int sampleRate)
+            => Pitch.FromYin(unprocessedBuffer, sampleRate, low: 60, high: 1000);
+    }
+
+    private void dispatchEvent(Voice voice)
+    {
+        PendingInputs.Enqueue(new MicrophoneInput
         {
-            PendingInputs.Enqueue(new MicrophoneInput
-            {
-                Voice = voice
-            });
-        }
+            Voice = voice
+        });
     }
 }
