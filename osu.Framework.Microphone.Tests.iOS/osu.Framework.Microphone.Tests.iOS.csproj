@@ -1,36 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <AssemblyName>osu.Framework.Microphone.Tests</AssemblyName>
+    <TargetFramework>net6.0-ios</TargetFramework>
+    <SupportedOSPlatformVersion>13.4</SupportedOSPlatformVersion>
     <RootNamespace>osu.Framework.Tests</RootNamespace>
-    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <ProjectGuid>{D972753E-45FC-4B82-B017-34BDE485F1BB}</ProjectGuid>
+    <AssemblyName>osu.Framework.Tests</AssemblyName>
   </PropertyGroup>
   <Import Project="..\osu.Framework.Microphone.iOS.props" />
-  <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-  </ItemGroup>
-  <ItemGroup>
-    <InterfaceDefinition Include="LaunchScreen.storyboard" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Info.plist" />
-    <None Include="Entitlements.plist" />
-    <LinkDescription Include="Linker.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Application.cs" />
-    <Compile Include="AppDelegate.cs" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\osu.Framework.Microphone.Tests\**\*.cs" Exclude="..\osu.Framework.Microphone.Tests\Program.cs;..\osu.Framework.Microphone.Tests\obj\**\*;..\osu.Framework.Microphone.Tests\bin\**\*">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
@@ -40,17 +16,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\osu.Framework.Microphone.iOS\osu.Framework.Microphone.iOS.csproj">
-      <Project>{431614f4-d662-4cbd-b6c2-3e0d79ca968b}</Project>
-      <Name>osu.Framework.Microphone.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\osu.Framework.Microphone\osu.Framework.Microphone.csproj">
-      <Project>{D0F85C61-800A-4645-8633-AC59208FA732}</Project>
-      <Name>osu.Framework.Microphone</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\osu.Framework.Microphone\osu.Framework.Microphone.csproj" />
+    <ProjectReference Include="..\osu.Framework.Microphone.iOS\osu.Framework.Microphone.iOS.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

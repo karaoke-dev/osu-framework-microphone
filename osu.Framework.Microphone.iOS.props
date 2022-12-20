@@ -1,69 +1,17 @@
 ﻿<Project>
   <PropertyGroup>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <LangVersion>9.0</LangVersion>
-    <DefaultMtouchExtraArgs>--nolinkaway</DefaultMtouchExtraArgs>
-    <DefaultMtouchGccFlags>-lstdc++ -lbz2 -framework AudioToolbox -framework AVFoundation -framework CoreMedia -framework VideoToolbox -framework SystemConfiguration -framework CFNetwork -framework Accelerate</DefaultMtouchGccFlags>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <OutputPath>bin\$(Platform)\$(Configuration)</OutputPath>
-    <MtouchI18n>cjk,mideast,other,rare,west</MtouchI18n>
-    <OptimizePNGs>false</OptimizePNGs>
-    <MtouchExtraArgs>$(DefaultMtouchExtraArgs) -gcc_flags "$(DefaultMtouchGccFlags)"</MtouchExtraArgs>
-    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
-    <MtouchVerbosity></MtouchVerbosity>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
-    <MtouchDebug>true</MtouchDebug>
-    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Platform)' == 'iPhoneSimulator'">
-    <MtouchArch>x86_64</MtouchArch>
-    <MtouchLink>None</MtouchLink>
+    <NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
+    <!-- MT7091 occurs when referencing a .framework bundle that consists of a static library.
+         It only warns about not copying the library to the app bundle to save space,
+         so there's nothing to be worried about. -->
+    <NoWarn>MT7091</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)' == 'iPhone'">
-    <MtouchFloat32>true</MtouchFloat32>
-    <MtouchLink>SdkOnly</MtouchLink>
-    <MtouchArch>ARM64</MtouchArch>
-    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
-    <MtouchFastDev>true</MtouchFastDev>
-    <IOSDebuggerPort>25823</IOSDebuggerPort>
-    <DeviceSpecificBuild>false</DeviceSpecificBuild>
+  <PropertyGroup Condition="'$(Platform)' == 'iPhoneSimulator'">
+    <RuntimeIdentifiers>iossimulator-x64</RuntimeIdentifiers>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
-    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
-    <DeviceSpecificBuild>true</DeviceSpecificBuild>
-    <IOSDebuggerPort>28126</IOSDebuggerPort>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="Xamarin.iOS" />
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
-  <ItemGroup Label="Package References">
-    <PackageReference Include="ppy.osu.Framework.iOS" Version="2022.1204.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <NativeReference Include="..\osu.Framework.iOS\*.a">
-      <Kind>Static</Kind>
-      <SmartLink>False</SmartLink>
-      <ForceLoad>True</ForceLoad>
-    </NativeReference>
-  </ItemGroup>
-  <ItemGroup Label="Package References">
-    <PackageReference Include="NWaves" Version="0.9.6" />
-    <PackageReference Include="ppy.osu.Framework" Version="2022.1204.0" />
-  </ItemGroup>
 </Project>
