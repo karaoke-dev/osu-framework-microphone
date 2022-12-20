@@ -3,13 +3,12 @@
 
 using osu.Framework.Testing;
 
-namespace osu.Framework.Tests
+namespace osu.Framework.Tests;
+
+internal partial class AutomatedVisualTestGame : TestGame
 {
-    internal partial class AutomatedVisualTestGame : TestGame
+    public AutomatedVisualTestGame()
     {
-        public AutomatedVisualTestGame()
-        {
-            Add(new TestBrowserTestRunner(new TestBrowser()));
-        }
+        Add(new TestBrowserTestRunner(new TestBrowser()));
     }
 }

@@ -3,15 +3,14 @@
 
 using osu.Framework.Input.States;
 
-namespace osu.Framework.Input.Events
-{
-    public abstract class MicrophoneEvent : UIEvent
-    {
-        public new IMicrophoneInputState CurrentState => (IMicrophoneInputState)base.CurrentState;
+namespace osu.Framework.Input.Events;
 
-        protected MicrophoneEvent(IMicrophoneInputState state)
-            : base(state as InputState ?? throw new NotMicrophoneInputStateException())
-        {
-        }
+public abstract class MicrophoneEvent : UIEvent
+{
+    public new IMicrophoneInputState CurrentState => (IMicrophoneInputState)base.CurrentState;
+
+    protected MicrophoneEvent(IMicrophoneInputState state)
+        : base(state as InputState ?? throw new NotMicrophoneInputStateException())
+    {
     }
 }

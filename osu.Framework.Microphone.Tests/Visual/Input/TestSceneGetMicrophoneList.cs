@@ -5,21 +5,20 @@ using NUnit.Framework;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input;
 
-namespace osu.Framework.Tests.Visual.Input
+namespace osu.Framework.Tests.Visual.Input;
+
+[TestFixture]
+public partial class TestSceneGetMicrophoneList : FrameworkTestScene
 {
-    [TestFixture]
-    public partial class TestSceneGetMicrophoneList : FrameworkTestScene
+    public TestSceneGetMicrophoneList()
     {
-        public TestSceneGetMicrophoneList()
+        var manager = new MicrophoneManager();
+        Child = new BasicDropdown<string>
         {
-            var manager = new MicrophoneManager();
-            Child = new BasicDropdown<string>
-            {
-                X = 100,
-                Y = 100,
-                Width = 300,
-                Items = manager.MicrophoneDeviceNames
-            };
-        }
+            X = 100,
+            Y = 100,
+            Width = 300,
+            Items = manager.MicrophoneDeviceNames
+        };
     }
 }

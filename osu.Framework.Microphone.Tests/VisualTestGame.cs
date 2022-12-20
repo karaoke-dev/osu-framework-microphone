@@ -8,27 +8,26 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Platform;
 using osu.Framework.Testing;
 
-namespace osu.Framework.Tests
-{
-    internal partial class VisualTestGame : TestGame
-    {
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            Child = new DrawSizePreservingFillContainer
-            {
-                Children = new Drawable[]
-                {
-                    new TestBrowser(),
-                    new CursorContainer()
-                }
-            };
-        }
+namespace osu.Framework.Tests;
 
-        public override void SetHost(GameHost host)
+internal partial class VisualTestGame : TestGame
+{
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        Child = new DrawSizePreservingFillContainer
         {
-            base.SetHost(host);
-            host.Window.CursorState |= CursorState.Hidden;
-        }
+            Children = new Drawable[]
+            {
+                new TestBrowser(),
+                new CursorContainer()
+            }
+        };
+    }
+
+    public override void SetHost(GameHost host)
+    {
+        base.SetHost(host);
+        host.Window.CursorState |= CursorState.Hidden;
     }
 }

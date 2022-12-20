@@ -7,59 +7,58 @@ using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
 
-namespace osu.Framework.iOS.Input
+namespace osu.Framework.iOS.Input;
+
+public class IOSMicrophoneHandler : MicrophoneHandler
 {
-    public class IOSMicrophoneHandler : MicrophoneHandler
+    public override bool IsActive => throw new System.NotImplementedException();
+
+    public IOSMicrophoneHandler()
+        : base(-1)
     {
-        public override bool IsActive => throw new System.NotImplementedException();
+    }
 
-        public IOSMicrophoneHandler()
-            : base(-1)
+    public override bool Initialize(GameHost host)
+    {
+        var session = AVAudioSession.SharedInstance();
+        bool success = false;
+
+        Logger.Log("Begin Recording", LoggingTarget.Information);
+
+        session.RequestRecordPermission(granted =>
         {
-        }
+            Logger.Log($"Audio Permission: {granted}", LoggingTarget.Information);
 
-        public override bool Initialize(GameHost host)
-        {
-            var session = AVAudioSession.SharedInstance();
-            bool success = false;
-
-            Logger.Log("Begin Recording", LoggingTarget.Information);
-
-            session.RequestRecordPermission(granted =>
+            if (granted)
             {
-                Logger.Log($"Audio Permission: {granted}", LoggingTarget.Information);
+                session.SetCategory(AVAudioSession.CategoryRecord, out NSError error);
 
-                if (granted)
+                if (error == null)
                 {
-                    session.SetCategory(AVAudioSession.CategoryRecord, out NSError error);
+                    session.SetActive(true, out error);
 
-                    if (error == null)
+                    if (error != null)
                     {
-                        session.SetActive(true, out error);
-
-                        if (error != null)
-                        {
-                            Logger.Log(error.LocalizedDescription, LoggingTarget.Information, LogLevel.Error);
-                        }
-                        else
-                        {
-                            success = base.Initialize(host);
-                            Logger.Log($"Microphone get permission status : {success}", LoggingTarget.Information);
-                        }
+                        Logger.Log(error.LocalizedDescription, LoggingTarget.Information, LogLevel.Error);
                     }
                     else
                     {
-                        Logger.Log(error.LocalizedDescription, LoggingTarget.Information, LogLevel.Error);
+                        success = base.Initialize(host);
+                        Logger.Log($"Microphone get permission status : {success}", LoggingTarget.Information);
                     }
                 }
                 else
                 {
-                    Logger.Log("YOU MUST ENABLE MICROPHONE PERMISSION", LoggingTarget.Information, LogLevel.Error);
+                    Logger.Log(error.LocalizedDescription, LoggingTarget.Information, LogLevel.Error);
                 }
-            });
+            }
+            else
+            {
+                Logger.Log("YOU MUST ENABLE MICROPHONE PERMISSION", LoggingTarget.Information, LogLevel.Error);
+            }
+        });
 
-            Logger.Log($"Checking : {success}", LoggingTarget.Information, LogLevel.Error);
-            return success;
-        }
+        Logger.Log($"Checking : {success}", LoggingTarget.Information, LogLevel.Error);
+        return success;
     }
 }
