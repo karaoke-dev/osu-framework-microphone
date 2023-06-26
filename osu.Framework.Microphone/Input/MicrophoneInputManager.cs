@@ -1,7 +1,7 @@
 ﻿// Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
+using osu.Framework.Allocation;
 using osu.Framework.Input.Events;
 using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Input.StateChanges.Events;
@@ -25,10 +25,7 @@ public partial class MicrophoneInputManager : CustomInputManager
         base.LoadComplete();
 
         // Use handler like iOS microphone handler if there's exist handler in dependencies.
-        if (Host.Dependencies.Get(typeof(MicrophoneHandler)) is MicrophoneHandler handler)
-            AddHandler(Activator.CreateInstance(handler.GetType()) as MicrophoneHandler);
-        else
-            AddHandler(new MicrophoneHandler(deviceId));
+        AddHandler(Host.Dependencies.TryGet(out MicrophoneHandler handler) ? handler : new MicrophoneHandler(deviceId));
     }
 
     public override void HandleInputStateChange(InputStateChangeEvent inputStateChange)
