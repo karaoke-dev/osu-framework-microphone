@@ -1,8 +1,8 @@
 # osu-framework-microphone
 
-[![](https://github.com/karaoke-dev/osu-framework-microphone/actions/workflows/ci.yml/badge.svg)](https://github.com/karaoke-dev/osu-framework-microphone)
+[![CI](https://github.com/karaoke-dev/osu-framework-microphone/actions/workflows/ci.yml/badge.svg)](https://github.com/karaoke-dev/osu-framework-microphone)
 [![CodeFactor](https://www.codefactor.io/repository/github/karaoke-dev/osu-framework-microphone/badge)](https://www.codefactor.io/repository/github/karaoke-dev/osu-framework-microphone)
-[![](https://img.shields.io/badge/月子我婆-passed-ff69b4.svg)](https://github.com/karaoke-dev/osu-framework-microphone)
+[![Waifu](https://img.shields.io/badge/月子我婆-passed-ff69b4.svg)](https://github.com/karaoke-dev/osu-framework-microphone)
 [![NuGet](https://img.shields.io/nuget/v/osu.Framework.Microphone.svg)](https://www.nuget.org/packages/osu.Framework.Microphone)
 [![NuGet](https://img.shields.io/nuget/dt/osu.Framework.Microphone.svg)](https://www.nuget.org/packages/osu.Framework.Microphone)
 [![dev chat](https://discordapp.com/api/guilds/299006062323826688/widget.png?style=shield)](https://discord.gg/ga2xZXk)
