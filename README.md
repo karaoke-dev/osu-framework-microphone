@@ -6,7 +6,8 @@
 [![NuGet](https://img.shields.io/nuget/v/osu.Framework.Microphone.svg)](https://www.nuget.org/packages/osu.Framework.Microphone)
 [![NuGet](https://img.shields.io/nuget/dt/osu.Framework.Microphone.svg)](https://www.nuget.org/packages/osu.Framework.Microphone)
 [![dev chat](https://discordapp.com/api/guilds/299006062323826688/widget.png?style=shield)](https://discord.gg/ga2xZXk)
-[![](https://tokei.rs/b1/github/karaoke-dev/osu-framework-microphone)](https://github.com/karaoke-dev/osu-framework-microphone)
+[![Total lines](https://tokei.rs/b1/github/karaoke-dev/osu-framework-microphone)](https://ghloc.vercel.app/karaoke-dev/osu-framework-microphone?branch=master)
+[![Dashboard](https://img.shields.io/badge/Dashboard-stonks!-informational)](https://www.repotrends.com/karaoke-dev/osu-framework-microphone)
 
 Unofficial support for using microphone as a input device.
 
