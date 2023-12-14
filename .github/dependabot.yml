@@ -5,3 +5,13 @@ updates:
   schedule:
     interval: monthly
   open-pull-requests-limit: 10
+  groups:
+      osu-related:
+        patterns:
+          - "ppy.osu.*"
+      dotnet-tools:
+        patterns:
+          - "cake.tool"
+          - "jetbrains.resharper.globaltools"
+          - "nvika"
+          - "codefilesanity"
