@@ -7,19 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      # FIXME: Tools won't run in .NET 5.0 unless you install 3.1.x LTS side by side.
-      # https://itnext.io/how-to-support-multiple-net-sdks-in-github-actions-workflows-b988daa884e
-      - name: Install .NET 3.1.x LTS
-        uses: actions/setup-dotnet@v1
+      - name: Install .NET 8.0.x
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "3.1.x"
-
-      - name: Install .NET 6.0.x
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "6.0.x"
+          dotnet-version: "8.0.x"
 
       - name: Restore Tools
         run: dotnet tool restore
@@ -31,7 +24,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/inspectcode
-          key: inspectcode-${{ hashFiles('.config/dotnet-tools.json', '.github/workflows/ci.yml', 'osu-framework-microphone.sln*', 'osu-framework-microphone*.slnf', '.editorconfig', '.globalconfig', 'CodeAnalysis/*') }}
+          key: inspectcode-${{ hashFiles('.config/dotnet-tools.json', '.github/workflows/ci.yml', 'osu-framework-microphone.sln*', 'osu-framework-microphone*.slnf', '.editorconfig', '.globalconfig', 'CodeAnalysis/*', '**/*.csproj', '**/*.props') }}
 
       - name: Dotnet code style
         run: dotnet build -c Debug -warnaserror osu-framework-microphone.Desktop.slnf -p:EnforceCodeStyleInBuild=true
@@ -62,23 +55,24 @@ jobs:
       OSU_EXECUTION_MODE: ${{matrix.threadingMode}}
       OSU_TESTS_LOCAL_HTTPBIN: 1
     strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - { prettyname: Windows, fullname: windows-latest }
-          - { prettyname: macOS, fullname: macos-latest }
-          - { prettyname: Linux, fullname: ubuntu-latest }
-        threadingMode: ['SingleThread', 'MultiThreaded']
+       fail-fast: false
+       matrix:
+          os:
+            - { prettyname: Windows, fullname: windows-latest, configuration: Debug }
+            - { prettyname: macOS, fullname: macos-latest, configuration: Debug }
+            - { prettyname: Linux, fullname: ubuntu-latest, configuration: Debug }
+            - { prettyname: Linux, fullname: ubuntu-latest, configuration: Release }
+          threadingMode: ['SingleThread', 'MultiThreaded']
     timeout-minutes: 60
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install .NET 6.0.x
-        uses: actions/setup-dotnet@v1
+      - name: Install .NET 8.0.x
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "6.0.x"
+          dotnet-version: "8.0.x"
 
       - name: Setup Go
         uses: actions/setup-go@v3
@@ -91,20 +85,20 @@ jobs:
         shell: bash
 
       - name: Compile
-        run: dotnet build -c Debug -warnaserror osu-framework-microphone.Desktop.slnf
+        run: dotnet build -c ${{matrix.os.configuration}} -warnaserror osu-framework-microphone.Desktop.slnf
 
       - name: Test
-        run: dotnet test $pwd/**/*.Tests/bin/Debug/*/*.Tests.dll --settings $pwd/build/vstestconfig.runsettings --logger "trx;LogFileName=TestResults-${{matrix.os.prettyname}}-${{matrix.threadingMode}}.trx"
+        run: dotnet test $pwd/**/*.Tests/bin/${{matrix.os.configuration}}/*/*.Tests.dll --no-build --settings $pwd/build/vstestconfig.runsettings --logger "trx;LogFileName=TestResults-${{matrix.os.prettyname}}-${{matrix.threadingMode}}-${{matrix.os.configuration}}.trx"
         shell: pwsh
 
       # Attempt to upload results even if test fails.
       # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#always
       - name: Upload Test Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: osu-framework-microphone-test-results-${{matrix.os.prettyname}}-${{matrix.threadingMode}}
-          path: ${{github.workspace}}/TestResults/TestResults-${{matrix.os.prettyname}}-${{matrix.threadingMode}}.trx
+          name: osu-framework-test-results-${{matrix.os.prettyname}}-${{matrix.threadingMode}}-${{matrix.os.configuration}}
+          path: ${{github.workspace}}/TestResults/TestResults-${{matrix.os.prettyname}}-${{matrix.threadingMode}}-${{matrix.os.configuration}}.trx
 
   build-only-android:
     name: Build only (Android)
@@ -112,36 +106,42 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install .NET 6.0.x
-        uses: actions/setup-dotnet@v1
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
         with:
-          dotnet-version: "6.0.x"
+          distribution: microsoft
+          java-version: 11
+
+      - name: Install .NET 8.0.x
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.x"
 
       - name: Restore .NET workloads
-        run: dotnet workload restore
+        run: dotnet workload install android
 
       - name: Compile
         run: dotnet build -c Debug osu-framework-microphone.Android.slnf
 
   build-only-ios:
-    # ignore the ios build.
-    if: false
     name: Build only (iOS)
     runs-on: macos-latest
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install .NET 6.0.x
-        uses: actions/setup-dotnet@v1
+      - name: Install .NET 8.0.x
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "6.0.x"
+          dotnet-version: "8.0.x"
 
       - name: Restore .NET workloads
-        run: dotnet workload restore
+        # `dotnet workload restore` is bugged in .NET 7.0.101+ when restoring iOS projects,
+        # see https://github.com/xamarin/xamarin-macios/issues/16400.
+        run: dotnet workload install ios
 
       - name: Compile
         run: dotnet build -c Debug osu-framework-microphone.iOS.slnf
