@@ -51,17 +51,10 @@ jobs:
         id: artifactsPath
         run: echo "::set-output name=NUGET_ARTIFACTS::${{github.workspace}}\artifacts"
 
-      # FIXME: 3.1 LTS is required here because iOS builds refuse to build without it.
-      # https://itnext.io/how-to-support-multiple-net-sdks-in-github-actions-workflows-b988daa884e
-      - name: Install .NET 3.1.x LTS
-        uses: actions/setup-dotnet@v1
+      - name: Install .NET 8.0.x
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "3.1.x"
-
-      - name: Install .NET 6.0.x
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "6.0.x"
+          dotnet-version: "8.0.x"
 
       - name: Build (Framework)
         run: dotnet build -c Release osu.Framework.Microphone /p:Version=${{needs.check-if-tag.outputs.version}} /p:GenerateDocumentationFile=true///
