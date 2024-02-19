@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using AVFoundation;
-using Foundation;
 using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
@@ -31,21 +30,13 @@ public class IOSMicrophoneHandler : MicrophoneHandler
 
             if (granted)
             {
-                session.SetCategory(AVAudioSession.CategoryRecord, out NSError error);
+                var error = session.SetCategory(AVAudioSessionCategory.Record);
 
                 if (error == null)
                 {
                     session.SetActive(true, out error);
-
-                    if (error != null)
-                    {
-                        Logger.Log(error.LocalizedDescription, LoggingTarget.Information, LogLevel.Error);
-                    }
-                    else
-                    {
-                        success = base.Initialize(host);
-                        Logger.Log($"Microphone get permission status : {success}", LoggingTarget.Information);
-                    }
+                    success = base.Initialize(host);
+                    Logger.Log($"Microphone get permission status : {success}", LoggingTarget.Information);
                 }
                 else
                 {
