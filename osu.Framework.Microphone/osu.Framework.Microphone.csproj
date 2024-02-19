@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Label="Project">
     <OutputType>Library</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Label="Nuget">
@@ -23,6 +23,6 @@
   </PropertyGroup>
   <ItemGroup Label="Package References">
     <PackageReference Include="NWaves" Version="0.9.6" />
-    <PackageReference Include="ppy.osu.Framework" Version="2023.1201.1" />
+    <PackageReference Include="ppy.osu.Framework" Version="2024.217.0" />
   </ItemGroup>
 </Project>

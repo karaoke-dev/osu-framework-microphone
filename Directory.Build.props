@@ -1,9 +1,13 @@
 <!-- Contains required properties for osu!framework projects. -->
 <Project>
   <PropertyGroup Label="C#">
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Label="Documentation">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup Label="License">
     <None Include="$(MSBuildThisFileDirectory)osu-framework-microphone.licenseheader">
@@ -36,9 +40,5 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/karaoke-dev/osu-framework-microphone</PackageProjectUrl>
     <RepositoryUrl>https://github.com/karaoke-dev/osu-framework-microphone</RepositoryUrl>
-  </PropertyGroup>
-  <PropertyGroup Label="Sourcelink3">
-    <EnableSourceLink Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildRuntimeType)' != 'Core' ">false</EnableSourceLink>
-    <EnableSourceControlManagerQueries>$(EnableSourceLink)</EnableSourceControlManagerQueries>
   </PropertyGroup>
 </Project>
