@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\osu.Framework.Microphone.Android.props" />
   <PropertyGroup>
-    <TargetFramework>net6.0-android</TargetFramework>
+    <TargetFramework>net8.0-android</TargetFramework>
     <OutputType>Exe</OutputType>
     <AssemblyName>osu.Framework.Microphone.Tests.Android</AssemblyName>
     <RootNamespace>osu.Framework.Tests.Android</RootNamespace>
