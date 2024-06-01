@@ -23,6 +23,6 @@
   </PropertyGroup>
   <ItemGroup Label="Package References">
     <PackageReference Include="NWaves" Version="0.9.6" />
-    <PackageReference Include="ppy.osu.Framework" Version="2024.217.0" />
+    <PackageReference Include="ppy.osu.Framework" Version="2024.528.1" />
   </ItemGroup>
 </Project>
