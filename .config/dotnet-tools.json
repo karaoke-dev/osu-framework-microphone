@@ -3,19 +3,19 @@
   "isRoot": true,
   "tools": {
     "cake.tool": {
-      "version": "4.0.0",
+      "version": "5.0.0",
       "commands": [
         "dotnet-cake"
       ]
     },
     "jetbrains.resharper.globaltools": {
-      "version": "2024.1.2",
+      "version": "2024.3.3",
       "commands": [
         "jb"
       ]
     },
     "nvika": {
-      "version": "3.0.1",
+      "version": "4.0.0",
       "commands": [
         "nvika"
       ]
