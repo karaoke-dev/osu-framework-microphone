@@ -67,28 +67,3 @@ jobs:
         with:
           name: osu-framework
           path: ${{steps.artifactsPath.outputs.nuget_artifacts}}\*.nupkg
-
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    needs: [check-if-tag, pack-framework]
-    steps:
-      - name: Create Artifact Directory
-        run: mkdir ${{github.workspace}}/artifacts/
-
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: ${{github.workspace}}/artifacts/
-
-        # Artifacts create their own directories. Let's fix that!
-        # https://github.com/actions/download-artifact#download-all-artifacts
-      - name: Move Artifacts to root of subdirectory
-        working-directory: ${{github.workspace}}/artifacts/
-        run: |
-          mv -v **/*.nupkg $(pwd)
-          rm -rfv */
-
-      - name: Deploy
-        run: |
-          dotnet nuget push ${{github.workspace}}/artifacts/*.nupkg --skip-duplicate --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_AUTH_TOKEN}}
