@@ -67,3 +67,6 @@ jobs:
         with:
           name: osu-framework
           path: ${{steps.artifactsPath.outputs.nuget_artifacts}}\*.nupkg
+
+      - name: Publish packages to nuget.org
+        run: dotnet nuget push ${{steps.artifactsPath.outputs.nuget_artifacts}}/*.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --source https://api.nuget.org/v3/index.json
