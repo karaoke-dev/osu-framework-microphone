@@ -133,17 +133,15 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install .NET 8.0.x
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.0.x"
 
       - name: Restore .NET workloads
-        # `dotnet workload restore` is bugged in .NET 7.0.101+ when restoring iOS projects,
-        # see https://github.com/xamarin/xamarin-macios/issues/16400.
-        run: dotnet workload install ios
+        run: dotnet workload install ios --from-rollback-file workloads.json
 
       - name: Compile
-        run: dotnet build -c Debug osu-framework-microphone.iOS.slnf
+        run: dotnet build -c Debug osu-framework.iOS.slnf
