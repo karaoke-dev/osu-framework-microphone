@@ -3,7 +3,7 @@
 Pushing a tag to the canonical repo triggers [`.github/workflows/deploy-pack.yml`](../.github/workflows/deploy-pack.yml) (`Tagged Release`), which runs two jobs:
 
 1. **Set Package Version** (`ubuntu-latest`) — hand-clones the repo shallowly (no `actions/checkout`) and derives the version from `git describe --exact-match --tags HEAD`. If HEAD isn't exactly on a tag it aborts with exit 128.
-2. **Pack (Framework)** (`windows-latest`) — `dotnet build` + `dotnet pack -c Release osu.Framework.Microphone /p:Version=<tag> /p:GenerateDocumentationFile=true`, uploads the `.nupkg` as a build artifact, then `dotnet nuget push --api-key ${{ secrets.NUGET_AUTH_TOKEN }}` in the same job.
+2. **Pack (Framework)** (`windows-latest`) — `dotnet build` + `dotnet pack -c Release osu.Framework.Microphone /p:Version=<tag> /p:GenerateDocumentationFile=true`, uploads the `.nupkg` as a build artifact, then exchanges the job's GitHub OIDC token for a short-lived nuget.org API key via `NuGet/login@v1` and `dotnet nuget push`es with it — all in the same job.
 
 Two things worth knowing before you tag:
 
@@ -37,7 +37,7 @@ NuGet **normalises away the leading zero** in the `MMDD` segment: the tag `2025.
 Push tags to `karaoke` (which resolves to `karaoke-dev/osu-framework-microphone` — see [opening-a-pull-request.md](opening-a-pull-request.md)), **not** `origin` (the personal fork). Two independent reasons, not just convention:
 
 1. **Actions are disabled on the fork.** `gh api repos/andy840119/osu-framework-microphone/actions/permissions` returns `{"enabled":false}`, so a tag pushed to `origin` triggers nothing at all — and no failure notification either, it just silently does nothing.
-2. **The nuget.org API key only exists for the canonical repo.** The publish step needs `secrets.NUGET_AUTH_TOKEN`. It isn't a repo-level secret on `karaoke-dev/osu-framework-microphone` (`gh api repos/karaoke-dev/osu-framework-microphone/actions/secrets` → `total_count: 0`), so it's inherited from the `karaoke-dev` org. Forks can't read org secrets, so even with Actions enabled the push would fail to authenticate.
+2. **Trusted Publishing is locked to this exact repo.** Publishing uses [nuget.org Trusted Publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing) (OIDC, via `NuGet/login@v1`) rather than a long-lived API key secret. The policy on nuget.org is bound to a specific `(repository owner, repository, workflow file)` triple — `karaoke-dev` / `osu-framework-microphone` / `deploy-pack.yml`. A run from any other repo, including the personal fork, cannot exchange its OIDC token for a NuGet API key even with a byte-identical workflow file.
 
 ```
 git fetch karaoke master
@@ -63,13 +63,13 @@ The last release was a three-tag fight. On 2025-06-14, `deploy-pack.yml` was edi
 | 23:16 | workflow fix `4905288`, tag `2025.0614.1` | no package on nuget.org |
 | 23:22 | workflow fix `30f8111`, tag `2025.0614.2` | published 23:25 |
 
-Tag `2025.0614.2` points exactly at that last fix commit, and `deploy-pack.yml` hasn't changed since — so the workflow **as it currently stands is the one that succeeded**, not an untested draft. Don't preemptively rewrite it.
+Tag `2025.0614.2` points exactly at that last fix commit — that shape of the workflow is the one that succeeded.
 
-But it's still carrying rot that a future runner-image change can break:
+Since then the publish step has been swapped from a long-lived API key to Trusted Publishing, so **the authentication half is again unproven by a real release**. The rest of the workflow still carries rot that a future runner-image change can break:
 
 - `::set-output` (superseded by `$GITHUB_OUTPUT`)
 - `actions/checkout@v2`, `actions/setup-dotnet@v3`
 
 So: push the tag, watch the run, and be ready to fix the workflow and re-tag with a bumped `PATCH` — that's the established pattern here, and re-pushing the same tag won't re-trigger cleanly. Note also that `Tagged Release` run history is not a reliable audit trail; GitHub ages runs out, and the 2025-06-14 runs have already been purged (`total_count: 0`).
 
-If you're modernising the workflow, consider switching the publish step to [nuget.org Trusted Publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing) as the sibling `osu-framework-font` repo did — it drops the long-lived API key, at the cost of locking publishing to the `(karaoke-dev, osu-framework-microphone, deploy-pack.yml)` triple. Do it as its own PR, not bundled into a release.
+If the `NuGet login` step fails to exchange its token, the cause is almost always on the nuget.org side rather than in this repo: the Trusted Publishing policy must exist for the package, be bound to `karaoke-dev` / `osu-framework-microphone` / `deploy-pack.yml`, and be owned by the account named in the step's `user:` input (`andy840119`). Policies for a package that doesn't exist yet also expire if unused — re-check it in nuget.org account settings before assuming the workflow is at fault.
