@@ -40,6 +40,9 @@ jobs:
     name: Pack (Framework)
     runs-on: windows-latest
     needs: [check-if-tag]
+    permissions:
+      contents: read
+      id-token: write
     defaults:
       run:
         shell: powershell
@@ -68,5 +71,11 @@ jobs:
           name: osu-framework
           path: ${{steps.artifactsPath.outputs.nuget_artifacts}}\*.nupkg
 
+      - name: NuGet login (OIDC -> short-lived API key)
+        uses: NuGet/login@v1
+        id: nuget-login
+        with:
+          user: andy840119
+
       - name: Publish packages to nuget.org
-        run: dotnet nuget push ${{steps.artifactsPath.outputs.nuget_artifacts}}\*.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ${{steps.artifactsPath.outputs.nuget_artifacts}}\*.nupkg --api-key ${{steps.nuget-login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
